@@ -280,3 +280,24 @@ function git_second($time) {
         return $ip;
     }
 
+
+    /**
+     *  签名
+     *
+     * @param $params
+     * @return string
+     * @author jiaozi<jiaozi@iyenei.com>
+     *
+     */
+     function sign($params)
+    {
+        ksort($params);
+        $sign = '';
+        foreach($params as $key => $val)
+        {
+            $sign .= $key.$val;
+        }
+        $sign .= 'keysecret'.$this->appSecret;
+        $sign = md5($sign);
+        return $sign;
+    }
