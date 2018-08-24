@@ -207,6 +207,14 @@
     }
 
     /**
+     * 获取唯一id
+     * @return string
+     */
+    function get_uuid(){
+       return md5(uniqid(md5(microtime(true)),true));
+    }
+
+    /**
      * 将时间戳 格式化 获取日期
      * @param time $time
      * @return string
