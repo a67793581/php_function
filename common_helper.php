@@ -1,9 +1,11 @@
 <?php
-    /** *利用google api生成二维码图片
-     * $content：二维码内容参数
-     * $size：生成二维码的尺寸，宽度和高度的值
-     * $lev：可选参数，纠错等级
-     * $margin：生成的二维码离边框的距离
+    /**
+     * 利用google api生成二维码图片
+     * @param string $content 二维码内容参数
+     * @param string $size 生成二维码的尺寸，宽度和高度的值
+     * @param string $lev 可选参数，纠错等级
+     * @param string $margin 生成的二维码离边框的距离
+     * @return string
      */
     function create_erweima($content, $size = '200', $lev = 'L', $margin= '0') {
         $content = urlencode($content);
@@ -12,9 +14,9 @@
     }
     /**
      * 请求远程数据
-     * @param type $url
+     * @param string $url
      * @param array $param
-     * @return type
+     * @return mixed
      */
     function get_curl_data($url, $param = array())
     {
@@ -43,7 +45,7 @@
      * 获取图片的Base64编码(不支持url)
      * @date 2017-02-20 19:41:22
      *
-     * @param $img_file 传入本地图片地址
+     * @param string $img_file 传入本地图片地址
      *
      * @return string
      */
@@ -153,7 +155,7 @@
 
     /**
      * 输入字符串的时：分：秒 返回秒数
-     * @param type $time
+     * @param int $time
      * @return string
      */
     function git_second($time) {
@@ -166,8 +168,8 @@
 
     /**
      * 获取日期天数差。
-     * @param type $day1
-     * @param type $day2
+     * @param string $day1
+     * @param string $day2
      * @return string
      */
     function diffBetweenTwoDays ($day1, $day2)
@@ -195,7 +197,7 @@
 
     /**
      * 将时间戳 格式化 获取日期
-     * @param time $time
+     * @param int $time
      * @return string
      */
     function get_date($time)
@@ -206,8 +208,8 @@
 
     /**
      * 将时间戳 格式化 获取日期
-     * @param time $time
-     * @param time $time_str
+     * @param int $time
+     * @param int $time_str
      * @return string
      */
     function get_date_str($time, $time_str)
@@ -226,7 +228,7 @@
 
     /**
      * 将时间戳 格式化 获取日期
-     * @param time $time
+     * @param int $time
      * @return string
      */
     function get_date_after($time)
@@ -236,7 +238,7 @@
     }
     /**
      * 检查数据的参数是不是电话参数。
-     * @param type $str
+     * @param string $str
      * @return string
      */
     function check_phone($str)
@@ -249,7 +251,7 @@
 
     /**
      * 检查数据的参数是不是邮箱参数。
-     * @param type $str
+     * @param string $str
      * @return string
      */
     function check_mail($str)
@@ -262,7 +264,7 @@
 
     /**
      * 检查数据的参数是不是数字参数。
-     * @param type $str
+     * @param string $str
      * @return string
      */
     function check_int($str)
@@ -275,7 +277,7 @@
 
     /**
      * 正则提取中文
-     * @param type $str
+     * @param string $str
      * @return string
      */
     function get_cn($str)
@@ -288,7 +290,7 @@
 
     /**
      * 正则提取数字
-     * @param type $str
+     * @param string $str
      * @return string
      */
     function get_int($str)
