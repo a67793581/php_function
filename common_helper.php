@@ -354,3 +354,45 @@
         $sign = md5($sign);
         return $sign;
     }
+
+    // 时间戳
+    function transformTime(int $time)
+    {
+        $t = time() - $time;
+        if ($t <= 0) {
+            return '1秒前';
+        }
+        $f = [
+            '31536000' => '年',
+            '2592000'  => '月',
+            '604800'   => '星期',
+            '86400'    => '天',
+            '3600'     => '小时',
+            '60'       => '分钟',
+            '1'        => '秒'
+        ];
+        foreach ($f as $k => $v) {
+            if (0 != $c = floor($t / (int)$k)) {
+                return $c . $v . '前';
+            }
+        }
+    }
+
+    // 时间标准格式化
+    function timeFormat($timestamp = 0, $format = 'Y-m-d H:i:s')
+    {
+        if (!$timestamp || !is_numeric($timestamp)) {
+            return [
+                'type' => 'unix_timestamp',
+                'value' => 0,
+                'alias' => '-',
+                'amaze_time' => ''
+            ];
+        }
+        return [
+            'type' => 'unix_timestamp',
+            'value' => $timestamp,
+            'alias' => date($format, $timestamp),
+            'amaze_time' => transformTime($timestamp)
+        ];
+    }
