@@ -388,7 +388,11 @@ function sign($params)
     return $sign;
 }
 
-// 时间戳
+/**
+ * 时间戳
+ * @param int $time
+ * @return string
+ */
 function transformTime(int $time)
 {
     $t = time() - $time;
@@ -409,6 +413,7 @@ function transformTime(int $time)
             return $c . $v . '前';
         }
     }
+    return '错误';
 }
 
 // 时间标准格式化
