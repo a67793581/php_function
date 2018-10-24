@@ -393,8 +393,11 @@ function sign($params)
  * @param int $time
  * @return string
  */
-function transformTime(int $time)
+function transformTime($time)
 {
+    if(!is_numeric($time)){
+        return '必须是数字';
+    }
     $t = time() - $time;
     if ($t <= 0) {
         return '1秒前';
