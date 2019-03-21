@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<!--悬停时来自4个方向刷背景色-->
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        body,
+        html {
+            background-color: #212a2c;
+            display: flex;
+            width: 100%;
+            height: 100%;
+            align-items: center;
+            flex-direction: column;
+            justify-content: center;
+            font-family: 'Helvetica Neue';
+        }
+        .text {
+            color: #252545;
+            font-size: 32px;
+            font-weight: 500;
+            text-shadow: 0px 5px rgba(20, 30, 40, 0.2);
+            letter-spacing: 0.15em;
+            transition: all 0.6s ease-out;
+        }
+        .container {
+            background-color: #faffdd;
+            width: 300px;
+            height: 500px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            overflow: hidden;
+            position: relative;
+            box-shadow: 0 10px 20px -5px rgba(0, 5, 10, 0.5);
+        }
+        .container .content {
+            z-index: 10;
+        }
+        .container .animation-container {
+            z-index: 0;
+        }
+        .container .animated-bg {
+            border-radius: 50%;
+            width: 200px;
+            height: 200px;
+            position: absolute;
+        }
+        .container .top {
+            background-color: #00ba84;
+            top: calc(-200px);
+            left: calc(50% - 100px);
+        }
+        .container .left {
+            background-color: #65cc9b;
+            left: -200px;
+            z-index: 1;
+        }
+        .container .right {
+            background-color: #8dfb95;
+            z-index: 2;
+            left: 100%;
+        }
+        .container .bottom {
+            z-index: 3;
+            background-color: #32c87f;
+            top: 100%;
+        }
+        .container:hover .text {
+            color: #fff;
+            text-shadow: 2px 2px rgba(3, 10, 30, 0.4);
+        }
+        .container:hover .animated-bg {
+            transform: scale(10);
+        }
+        .container:hover .top {
+            transition: all 0.3s ease-in-out;
+        }
+        .container:hover .left {
+            transition: all 0.3s 0.2s ease-in-out;
+        }
+        .container:hover .right {
+            transition: all 0.35s 0.4s ease-in-out;
+        }
+        .container:hover .bottom {
+            transition: all 0.4s 0.65s ease-in-out;
+        }
+        .me {
+            text-align: center;
+            color: #425458;
+            margin: 30px 0 10px;
+        }
+        .me a {
+            display: block;
+            margin: 4px;
+            text-decoration: none;
+            text-shadow: 0 1px rgba(0, 0, 0, 0.5);
+            color: #00ba84;
+            font-weight: 500;
+            letter-spacing: 0.2em;
+            transition: all 0.2s cubic-bezier(0.56, 0.03, 0.51, 2.28);
+        }
+        .me a:hover {
+            color: #65cc9b;
+            transform: scale(1.1);
+        }
+</style>
+</head>
+<body>
+
+
+<script src="http://wow.techbrood.com/libs/jquery/jquery-1.11.1.min.js"></script>
+<div class="container">
+    <div class="animation-container">
+        <div class="animated-bg top"></div>
+        <div class="animated-bg right"></div>
+        <div class="animated-bg left"></div>
+        <div class="animated-bg bottom"></div>
+    </div>
+
+    <div class="content">
+        <div class="text">HOVER ME</div>
+    </div>
+</div>
+
+<div class="me">made by
+    <br /><a href="">justgoscha</a>
+</div>
+
+<script>
+</script>
+</body>
+</html>
