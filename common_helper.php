@@ -363,7 +363,6 @@ if (!function_exists('get_date_second')) {
      */
     function get_date_second($seconds)
     {
-        $s = '';
         $h = floor($seconds / 3600);
         $m = floor(($seconds - $h * 3600) / 60);
         $s = ($seconds - $h * 3600 - $m * 60);
@@ -900,7 +899,7 @@ if (!function_exists('my_rmdir')) {
      * 递归删除目录及目录下的所有文件
      * my_rmdir
      *
-     * @param $path 需要删除的目录
+     * @param string $path
      * @author jiangbingjie<jiangbinjie@i3020.com>
      */
     function my_rmdir($path)
@@ -910,11 +909,12 @@ if (!function_exists('my_rmdir')) {
             if ($item == '.' || $item == '..') {
                 continue;
             }
-            if (is_dir($op->path . '/' . $item)) {
-                my_rmdir($op->path . '/' . $item);
-                rmdir($op->path . '/' . $item);
+            $path = (string) $op->path . '/' . $item;
+            if (is_dir($path)) {
+                my_rmdir($path);
+                rmdir($path);
             } else {
-                unlink($op->path . '/' . $item);
+                unlink($path);
             }
         }
     }
