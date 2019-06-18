@@ -3,6 +3,7 @@
 if (!function_exists('is_json')) {
     /**
      * 判断数据是合法的json数据: (PHP版本大于5.3)
+     *
      * @param $string
      * @return bool
      * @author jiangbingjie<jiangbinjie@i3020.com>
@@ -10,6 +11,7 @@ if (!function_exists('is_json')) {
     function is_json($string)
     {
         json_decode($string);
+
         return (json_last_error() == JSON_ERROR_NONE);
     }
 }
@@ -17,6 +19,7 @@ if (!function_exists('is_json')) {
 if (!function_exists('is_not_json')) {
     /**
      * 判断数据不是JSON格式
+     *
      * @param $str
      * @return bool
      * @author jiangbingjie<jiangbinjie@i3020.com>
@@ -30,6 +33,7 @@ if (!function_exists('is_not_json')) {
 if (!function_exists('create_erweima')) {
     /**
      * 利用google api生成二维码图片
+     *
      * @param string $content 二维码内容参数
      * @param string $size 生成二维码的尺寸，宽度和高度的值
      * @param string $lev 可选参数，纠错等级
@@ -41,16 +45,18 @@ if (!function_exists('create_erweima')) {
     {
         $content = urlencode($content);
         $image = '<img src="http://chart.apis.google.com/chart?chs=' . $size . 'x' . $size . '&amp;cht=qr&chld=' . $lev . '|' . $margin . '&amp;chl=' . $content . '"  widht="' . $size . '" height="' . $size . '" />';
+
         return $image;
     }
 }
 
 if (!function_exists('is_https')) {
     /**
-     * is_https
+     * 判断是不是https
+     *
      * @create 2019-01-29 12:04:26
-     * @author jiangbingjie<jiangbinjie@i3020.com>
      * @return bool
+     * @author jiangbingjie<jiangbinjie@i3020.com>
      */
     function is_https()
     {
@@ -61,18 +67,20 @@ if (!function_exists('is_https')) {
         } elseif (!empty($_SERVER['HTTP_FRONT_END_HTTPS']) && strtolower($_SERVER['HTTP_FRONT_END_HTTPS']) !== 'off') {
             return true;
         }
+
         return false;
     }
 }
 if (!function_exists('get_curl_data')) {
     /**
      * 请求远程数据
+     *
      * @param string $url
      * @param array $param
      * @return mixed
      * @author jiangbingjie<jiangbinjie@i3020.com>
      */
-    function get_curl_data($url, $param = array())
+    function get_curl_data($url, $param = [])
     {
         // 创建一个cURL资源
         $ch = curl_init();
@@ -92,6 +100,7 @@ if (!function_exists('get_curl_data')) {
         $res = curl_exec($ch);
         // 关闭cURL资源，并且释放系统资源
         curl_close($ch);
+
         return $res;
     }
 }
@@ -99,10 +108,9 @@ if (!function_exists('get_curl_data')) {
 if (!function_exists('imgToBase64')) {
     /**
      * 获取图片的Base64编码(不支持url)
+     *
      * @date 2017-02-20 19:41:22
-     *
      * @param string $img_file 传入本地图片地址
-     *
      * @return string
      * @author jiangbingjie<jiangbinjie@i3020.com>
      */
@@ -153,6 +161,7 @@ if (!function_exists('imgToBase64')) {
 if (!function_exists('isMobile')) {
     /**
      *移动端判断
+     *
      * @return bool
      * @author jiangbingjie<jiangbinjie@i3020.com>
      */
@@ -169,7 +178,7 @@ if (!function_exists('isMobile')) {
         }
         // 脑残法，判断手机发送的客户端标志,兼容性有待提高
         if (isset($_SERVER['HTTP_USER_AGENT'])) {
-            $clientkeywords = array(
+            $clientkeywords = [
                 'nokia',
                 'sony',
                 'ericsson',
@@ -201,8 +210,8 @@ if (!function_exists('isMobile')) {
                 'cldc',
                 'midp',
                 'wap',
-                'mobile'
-            );
+                'mobile',
+            ];
             // 从HTTP_USER_AGENT中查找手机浏览器的关键字
             if (preg_match("/(" . implode('|', $clientkeywords) . ")/i", strtolower($_SERVER['HTTP_USER_AGENT']))) {
                 return true;
@@ -212,13 +221,11 @@ if (!function_exists('isMobile')) {
         if (isset($_SERVER['HTTP_ACCEPT'])) {
             // 如果只支持wml并且不支持html那一定是移动设备
             // 如果支持wml和html但是wml在html之前则是移动设备
-            if ((strpos($_SERVER['HTTP_ACCEPT'], 'vnd.wap.wml') !== false) && (strpos($_SERVER['HTTP_ACCEPT'],
-                        'text/html') === false || (strpos($_SERVER['HTTP_ACCEPT'],
-                            'vnd.wap.wml') < strpos($_SERVER['HTTP_ACCEPT'], 'text/html')))
-            ) {
+            if ((strpos($_SERVER['HTTP_ACCEPT'], 'vnd.wap.wml') !== false) && (strpos($_SERVER['HTTP_ACCEPT'], 'text/html') === false || (strpos($_SERVER['HTTP_ACCEPT'], 'vnd.wap.wml') < strpos($_SERVER['HTTP_ACCEPT'], 'text/html')))) {
                 return true;
             }
         }
+
         return false;
     }
 }
@@ -226,6 +233,7 @@ if (!function_exists('isMobile')) {
 if (!function_exists('git_second')) {
     /**
      * 输入字符串的时：分：秒 返回秒数
+     *
      * @param int $time
      * @return string
      * @author jiangbingjie<jiangbinjie@i3020.com>
@@ -236,6 +244,7 @@ if (!function_exists('git_second')) {
         $m = substr($time, -5, 2) * 60;
         $s = substr($time, -2, 2);
         $res = $h + $m + $s;
+
         return $res;
     }
 }
@@ -243,6 +252,7 @@ if (!function_exists('git_second')) {
 if (!function_exists('diffBetweenTwoDays')) {
     /**
      * 获取日期天数差。
+     *
      * @param string $day1
      * @param string $day2
      * @return string
@@ -258,6 +268,7 @@ if (!function_exists('diffBetweenTwoDays')) {
             $second2 = $second1;
             $second1 = $tmp;
         }
+
         return ($second1 - $second2) / 86400;
     }
 }
@@ -265,12 +276,14 @@ if (!function_exists('diffBetweenTwoDays')) {
 if (!function_exists('get_time')) {
     /**
      * 获取时间，采用标准时区。
+     *
      * @return string
      * @author jiangbingjie<jiangbinjie@i3020.com>
      */
     function get_time()
     {
         date_default_timezone_set('Asia/Shanghai');
+
         return date("Y-m-d H:i:s");
     }
 }
@@ -278,6 +291,7 @@ if (!function_exists('get_time')) {
 if (!function_exists('get_date')) {
     /**
      * 将时间戳 格式化 获取日期
+     *
      * @param int $time
      * @return string
      * @author jiangbingjie<jiangbinjie@i3020.com>
@@ -285,13 +299,15 @@ if (!function_exists('get_date')) {
     function get_date($time)
     {
         date_default_timezone_set('PRC');
-        return date("Y-m-d", mktime(0, 0, 0, date("m"), date("d") - (int)$time, date("y")));
+
+        return date("Y-m-d", mktime(0, 0, 0, date("m"), date("d") - (int) $time, date("y")));
     }
 }
 
 if (!function_exists('get_date_str')) {
     /**
      * 将时间戳 格式化 获取日期
+     *
      * @param int $time
      * @param int $time_str
      * @return string
@@ -300,6 +316,7 @@ if (!function_exists('get_date_str')) {
     function get_date_str($time, $time_str)
     {
         date_default_timezone_set('PRC');
+
         return date("Y-m-d", strtotime('-' . $time . ' days', strtotime($time_str)));
     }
 }
@@ -307,6 +324,7 @@ if (!function_exists('get_date_str')) {
 if (!function_exists('get_uuid')) {
     /**
      * 获取唯一id
+     *
      * @return string
      * @author jiangbingjie<jiangbinjie@i3020.com>
      */
@@ -319,6 +337,7 @@ if (!function_exists('get_uuid')) {
 if (!function_exists('getMillisecond')) {
     /**
      * 获取毫秒级别的时间戳
+     *
      * @author jiangbingjie<jiangbinjie@i3020.com>
      */
     function getMillisecond()
@@ -328,6 +347,7 @@ if (!function_exists('getMillisecond')) {
         $time = $time[1] . ($time[0] * 1000);
         $time2 = explode(".", $time);
         $time = $time2[0];
+
         return $time;
     }
 }
@@ -335,11 +355,11 @@ if (!function_exists('getMillisecond')) {
 if (!function_exists('get_date_second')) {
     /**
      * 把秒换成时分秒
-     * get_date_second
+     *
      * @create 2019-01-24 15:21:21
-     * @author jiangbingjie<jiangbinjie@i3020.com>
      * @param $seconds
      * @return float|int|string
+     * @author jiangbingjie<jiangbinjie@i3020.com>
      */
     function get_date_second($seconds)
     {
@@ -350,6 +370,7 @@ if (!function_exists('get_date_second')) {
         $m = $m >= 10 ? $m : '0' . $m;
         $s = $s >= 10 ? $s : '0' . $s;
         $s = $h . ':' . $m . ':' . $s;
+
         return $s;
     }
 }
@@ -357,6 +378,7 @@ if (!function_exists('get_date_second')) {
 if (!function_exists('get_date_after')) {
     /**
      * 将时间戳 格式化 获取日期
+     *
      * @param int $time
      * @return string
      * @author jiangbingjie<jiangbinjie@i3020.com>
@@ -364,13 +386,15 @@ if (!function_exists('get_date_after')) {
     function get_date_after($time)
     {
         date_default_timezone_set('PRC');
-        return date("Y-m-d", mktime(0, 0, 0, date("m"), date("d") + (int)$time, date("y")));
+
+        return date("Y-m-d", mktime(0, 0, 0, date("m"), date("d") + (int) $time, date("y")));
     }
 }
 
 if (!function_exists('check_phone')) {
     /**
      * 检查数据的参数是不是电话参数。
+     *
      * @param string $str
      * @return string
      * @author jiangbingjie<jiangbinjie@i3020.com>
@@ -380,14 +404,15 @@ if (!function_exists('check_phone')) {
         if (empty($str)) {
             return true;
         }
-        return preg_match("/^((\(\d{2,3}\))|(\d{3}[\-]?))?(\(0\d{2,3}\)|0\d{2,3}-)?[1-9]\d{6,7}([\-]?\d{1,4})?$/",
-            $str);
+
+        return preg_match("/^((\(\d{2,3}\))|(\d{3}[\-]?))?(\(0\d{2,3}\)|0\d{2,3}-)?[1-9]\d{6,7}([\-]?\d{1,4})?$/", $str);
     }
 }
 
 if (!function_exists('check_mail')) {
     /**
      * 检查数据的参数是不是邮箱参数。
+     *
      * @param string $str
      * @return string
      * @author jiangbingjie<jiangbinjie@i3020.com>
@@ -397,6 +422,7 @@ if (!function_exists('check_mail')) {
         if (empty($str)) {
             return true;
         }
+
         return preg_match("/^[A-Z_a-z0-9-\.]+@([A-Z_a-z0-9-]+\.)+[a-z0-9A-Z]{2,4}$/", $str);
     }
 }
@@ -404,6 +430,7 @@ if (!function_exists('check_mail')) {
 if (!function_exists('check_int')) {
     /**
      * 检查数据的参数是不是数字参数。
+     *
      * @param string $str
      * @return string
      * @author jiangbingjie<jiangbinjie@i3020.com>
@@ -413,6 +440,7 @@ if (!function_exists('check_int')) {
         if (empty($str)) {
             return true;
         }
+
         return preg_match("/^\d+$/", $str);
     }
 }
@@ -420,6 +448,7 @@ if (!function_exists('check_int')) {
 if (!function_exists('get_cn')) {
     /**
      * 正则提取中文
+     *
      * @param string $str
      * @return string
      * @author jiangbingjie<jiangbinjie@i3020.com>
@@ -428,14 +457,15 @@ if (!function_exists('get_cn')) {
     {
         preg_match_all('/[\x{4e00}-\x{9fff}]+/u', $str, $matches);
         $cn = join('', $matches[0]);
+
         return $cn;
     }
-
 }
 
 if (!function_exists('get_int')) {
     /**
      * 正则提取数字
+     *
      * @param string $str
      * @return string
      * @author jiangbingjie<jiangbinjie@i3020.com>
@@ -444,6 +474,7 @@ if (!function_exists('get_int')) {
     {
         preg_match_all('/[\d]+/u', $str, $matches);
         $int = join('', $matches[0]);
+
         return $int;
     }
 }
@@ -451,6 +482,7 @@ if (!function_exists('get_int')) {
 if (!function_exists('get_from_ip')) {
     /**
      * 获取ip
+     *
      * @return string
      * @author jiangbingjie<jiangbinjie@i3020.com>
      */
@@ -469,9 +501,9 @@ if (!function_exists('get_from_ip')) {
         } else {
             $ip = $_SERVER['REMOTE_ADDR'];
         }
+
         return $ip;
     }
-
 }
 
 if (!function_exists('sign')) {
@@ -494,6 +526,7 @@ if (!function_exists('sign')) {
         }
         $sign .= 'secret_key' . $secret_key;
         $sign = md5($sign);
+
         return $sign;
     }
 }
@@ -501,6 +534,7 @@ if (!function_exists('sign')) {
 if (!function_exists('transformTime')) {
     /**
      * 时间戳
+     *
      * @param int $time
      * @return string
      * @author jiangbingjie<jiangbinjie@i3020.com>
@@ -521,19 +555,26 @@ if (!function_exists('transformTime')) {
             '86400' => '天',
             '3600' => '小时',
             '60' => '分钟',
-            '1' => '秒'
+            '1' => '秒',
         ];
         foreach ($f as $k => $v) {
-            if (0 != $c = floor($t / (int)$k)) {
+            if (0 != $c = floor($t / (int) $k)) {
                 return $c . $v . '前';
             }
         }
+
         return '错误';
     }
 }
 
 if (!function_exists('timeFormat')) {
-// 时间标准格式化
+    /**
+     * 时间标准格式化
+     *
+     * @param int $timestamp
+     * @param string $format
+     * @return array
+     */
     function timeFormat($timestamp = 0, $format = 'Y-m-d H:i:s')
     {
         if (!$timestamp || !is_numeric($timestamp)) {
@@ -541,22 +582,23 @@ if (!function_exists('timeFormat')) {
                 'type' => 'unix_timestamp',
                 'value' => 0,
                 'alias' => '-',
-                'amaze_time' => ''
+                'amaze_time' => '',
             ];
         }
+
         return [
             'type' => 'unix_timestamp',
             'value' => $timestamp,
             'alias' => date($format, $timestamp),
-            'amaze_time' => transformTime($timestamp)
+            'amaze_time' => transformTime($timestamp),
         ];
     }
-
 }
 
 if (!function_exists('pack_input_params')) {
     /**
      * 过滤字符串单双引号
+     *
      * @param string $str 用逗号分隔的多个参数
      * @return mixed
      * @author jiangbingjie<jiangbinjie@i3020.com>
@@ -575,13 +617,15 @@ if (!function_exists('replace_special_char')) {
     /**
      * 过滤非法字符
      * replace_special_char
-     * @author jiangbingjie<jiangbinjie@i3020.com>
+     *
      * @param $strParam
      * @return null|string|string[] | 过滤非法字符
+     * @author jiangbingjie<jiangbinjie@i3020.com>
      */
     function replace_special_char($strParam)
     {
         $regex = "/\/|\~|\!|\@|\#|\\$|\%|\^|\&|\*|\(|\)|\（|\）|\_|\+|\{|\}|\:|\<|\>|\?|\[|\]|\,|\.|\/|\;|\'|\`|\-|\=|\\\|\||\s+/";
+
         return preg_replace($regex, "_", $strParam);
     }
 }
@@ -589,6 +633,7 @@ if (!function_exists('replace_special_char')) {
 if (!function_exists('array_to_object')) {
     /**
      * 数组转为对象
+     *
      * @param array $e
      * @return mixed
      * @author jiangbingjie<jiangbinjie@i3020.com>
@@ -600,16 +645,18 @@ if (!function_exists('array_to_object')) {
         }
         foreach ($e as $k => $v) {
             if (gettype($v) == 'array' || getType($v) == 'object') {
-                $e [$k] = (object)$this->array_to_object($v);
+                $e [$k] = (object) $this->array_to_object($v);
             }
         }
-        return (object)$e;
+
+        return (object) $e;
     }
 }
 
 if (!function_exists('object_to_array')) {
     /**
      * 对象转为数组
+     *
      * @param object $obj
      * @return array
      * @author jiangbingjie<jiangbinjie@i3020.com>
@@ -622,16 +669,17 @@ if (!function_exists('object_to_array')) {
             $arr [$key] = $val;
         }
         if (!isset($arr)) {
-            $arr = array();
+            $arr = [];
         }
+
         return $arr;
     }
-
 }
 
 if (!function_exists('array_filter_null')) {
     /**
      * 过滤数组null值
+     *
      * @param array $data
      * @return array
      * @author jiangbingjie<jiangbinjie@i3020.com>
@@ -643,6 +691,7 @@ if (!function_exists('array_filter_null')) {
                 unset($data[$k]);
             }
         }
+
         return $data;
     }
 }
@@ -650,6 +699,7 @@ if (!function_exists('array_filter_null')) {
 if (!function_exists('get_good_str')) {
     /**
      * 获取字符过滤 用反斜线转义字符串
+     *
      * @param string $ary
      * @return string
      * @author jiangbingjie<jiangbinjie@i3020.com>
@@ -662,6 +712,7 @@ if (!function_exists('get_good_str')) {
 
         if (is_numeric($ary)) {
             $ary = trim($ary);
+
             return $ary;
         }
 
@@ -669,36 +720,38 @@ if (!function_exists('get_good_str')) {
             if (!is_null(json_decode($ary))) {
                 return $ary;
             }
+
             return addslashes(strip_tags(trim($ary)));
         }
+
         return $ary;
     }
 }
 
 if (!function_exists('strip_quotes')) {
     /**
-     * Strip Quotes
-     *
      * 从字符串中移除单引号和双引号
      *
-     * @param    string $str
+     * @param string $str
      * @return    string
      * @author jiangbingjie<jiangbinjie@i3020.com>
      */
     function strip_quotes($str)
     {
-        return str_replace(array('"', "'"), '', $str);
+        return str_replace(['"', "'"], '', $str);
     }
 }
+
 if (!function_exists('get_ids')) {
     /**
      * 获取符合mysql IN的 id数组
      * get_ids
-     * @author jiangbingjie<jiangbinjie@i3020.com>
+     *
      * @param $array
      * @param $value
      * @param $key
      * @return array|获取符合mysql IN的 id数组
+     * @author jiangbingjie<jiangbinjie@i3020.com>
      */
     function get_ids($array, $value, $key = null)
     {
@@ -710,15 +763,16 @@ if (!function_exists('calculate_summation')) {
     /**
      * 合计
      * calculate_summation
-     * @author jiangbingjie<jiangbinjie@i3020.com>
+     *
      * @param array $data //原始数据
      * @param $field //需要计算的字段
      * @return array
+     * @author jiangbingjie<jiangbinjie@i3020.com>
      */
     function calculate_summation(array $data, $field)
     {
         $field = explode(',', $field);
-        $total = array();
+        $total = [];
         //初始值
         foreach ($field as $v) {
             $total[$v] = 0;
@@ -729,6 +783,7 @@ if (!function_exists('calculate_summation')) {
                 $total[$key] += $v[$key];
             }
         }
+
         return $total;
     }
 }
@@ -736,6 +791,7 @@ if (!function_exists('calculate_summation')) {
 if (!function_exists('array_sort_tag')) {
     /***
      * 数组排序(两个参数)
+     *
      * @param $arr
      * @param $key1
      * @param string $type1
@@ -749,7 +805,7 @@ if (!function_exists('array_sort_tag')) {
         $arr = array_values($arr);
 
         $key1name = $arr[0][$key1];
-        $temp = array();
+        $temp = [];
         $i = 0;
         $length = count($arr);
         foreach ($arr as $k => $v) {
@@ -771,16 +827,19 @@ if (!function_exists('array_sort_tag')) {
                     $i++;
                 }
                 $key1name = $v[$key1];
-                $temp = array();
+                $temp = [];
                 $temp[] = $arr[$k];
             }
         }
+
         return $arr;
     }
 }
+
 if (!function_exists('array_sort')) {
     /***
      * 排序
+     *
      * @param $arr
      * @param $keys
      * @param string $type
@@ -788,7 +847,7 @@ if (!function_exists('array_sort')) {
      */
     function array_sort($arr, $keys, $type = 'desc')
     {
-        $keys_value = $new_array = array();
+        $keys_value = $new_array = [];
         foreach ($arr as $k => $v) {
             $keys_value[$k] = $v[$keys];//把所有该键值存到$keys_value
         }
@@ -801,23 +860,26 @@ if (!function_exists('array_sort')) {
         foreach ($keys_value as $k => $v) {
             $new_array[$k] = $arr[$k]; //取出该键值下的其他的值
         }
+
         return $new_array;
     }
 }
+
 if (!function_exists('paging')) {
     /**
      * 分页
      * paging
+     *
      * @create 2018-11-30 20:31:15
-     * @author jiangbingjie<jiangbinjie@i3020.com>
      * @param $data
      * @param $limit
      * @return array
+     * @author jiangbingjie<jiangbinjie@i3020.com>
      */
     function paging($data, $limit)
     {
         if (empty($data) or !is_array($data)) {
-            return array();
+            return [];
         }
         $result = [];
         for ($i = 0; $i < ceil(count($data) / $limit); $i++) {
@@ -828,15 +890,18 @@ if (!function_exists('paging')) {
                 }
             }
         }
+
         return $result;
     }
 }
+
 if (!function_exists('my_rmdir')) {
     /**
      * 递归删除目录及目录下的所有文件
      * my_rmdir
-     * @author jiangbingjie<jiangbinjie@i3020.com>
+     *
      * @param $path 需要删除的目录
+     * @author jiangbingjie<jiangbinjie@i3020.com>
      */
     function my_rmdir($path)
     {
@@ -851,7 +916,6 @@ if (!function_exists('my_rmdir')) {
             } else {
                 unlink($op->path . '/' . $item);
             }
-
         }
     }
 }
@@ -860,15 +924,17 @@ if (!function_exists('week')) {
     /**
      * 获取本周第一天的当前时间戳
      * week
+     *
      * @create 2018-12-12 14:42:00
-     * @author jiangbingjie<jiangbinjie@i3020.com>
      * @param string $format
      * @return false|int
+     * @author jiangbingjie<jiangbinjie@i3020.com>
      */
     function week($format = '')
     {
         $w = date('w');
         $week = $w == 0 ? 'last week ' : 'this week ';
+
         return strtotime($week . $format);
     }
 }
@@ -876,12 +942,12 @@ if (!function_exists('week')) {
 if (!function_exists('get_full_week_time')) {
     /**
      * 获取某段时间内完整自然天的时间戳
-     * get_full_day_time
+     *
      * @create 2019-02-18 12:48:56
-     * @author jiangbingjie<jiangbinjie@i3020.com>
      * @param $begin
      * @param $end
      * @return array
+     * @author jiangbingjie<jiangbinjie@i3020.com>
      */
     function get_full_day_time($begin, $end)
     {
@@ -897,6 +963,7 @@ if (!function_exists('get_full_week_time')) {
             $end = strtotime("-1 day", $end);
             $i++;
         }
+
         return $data;
     }
 }
@@ -904,9 +971,9 @@ if (!function_exists('get_full_week_time')) {
 if (!function_exists('get_full_week_time')) {
     /**
      * @name 获取某段时间内完整自然周的时间戳
-     * @author zay
      * @param
      * @return array
+     * @author zay
      */
     function get_full_week_time($start_time, $end_time)
     {
@@ -930,6 +997,7 @@ if (!function_exists('get_full_week_time')) {
                 }
             }
         }
+
         return $data;
         //$array_count = count($data);
         /*if ($array_count) {
@@ -942,14 +1010,14 @@ if (!function_exists('get_full_week_time')) {
 if (!function_exists('get_full_month_time')) {
     /**
      * @name 获取某段时间内完整自然月的时间戳
-     * @author zay
      * @param
      * @return array
+     * @author zay
      */
     function get_full_month_time($start_time, $end_time)
     {
         $end = strtotime(date('Y-m-d 23:59:59', $end_time));
-        $data = array();
+        $data = [];
         while (true) {
             if (date('Y-m-t', $end) == date('Y-m-d', $end)) {
                 $begin = strtotime(date('Y-m-01 00:00:00', $end));
@@ -969,6 +1037,7 @@ if (!function_exists('get_full_month_time')) {
                 }
             }
         }
+
         return $data;
     }
 }
