@@ -1041,3 +1041,43 @@ if (!function_exists('get_full_month_time')) {
         return $data;
     }
 }
+
+/**
+ * 无限极非递归生成树
+ *
+ * @param array $items 例如：[['id' => 1, 'pid' => 0, 'name' => 'AA'],['id' => 2, 'pid' => 1, 'name' => 'BB']]
+ * @return array
+ */
+function generateTree($items)
+{
+    $tree = [];
+    foreach ($items as $item) {
+        if (isset($items[$item['pid']])) {
+            $items[$item['pid']]['son'][] = &$items[$item['id']];
+        } else {
+            $tree[] = &$items[$item['id']];
+        }
+    }
+
+    return $tree;
+}
+
+/**
+ * 动态添加数据
+ *
+ * @param array $items 例如：[['id' => 1, 'pid' => 0, 'name' => 'AA'],['id' => 2, 'pid' => 1, 'name' => 'BB']]
+ * @param int $pid
+ * @param string $name
+ */
+function addTree(&$items, $pid, $name)
+{
+    $num = count($items) + 1;
+    if ($num == 0) {
+        $num = 0;
+    }
+    $items[$num] = [
+        'id' => $num,
+        'pid' => $pid,
+        'name' => $name,
+    ];
+}
