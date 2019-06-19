@@ -644,7 +644,7 @@ if (!function_exists('array_to_object')) {
         }
         foreach ($e as $k => $v) {
             if (gettype($v) == 'array' || getType($v) == 'object') {
-                $e [$k] = (object) $this->array_to_object($v);
+                $e [$k] = (object) array_to_object($v);
             }
         }
 
@@ -664,7 +664,7 @@ if (!function_exists('object_to_array')) {
     {
         $_arr = is_object($obj) ? get_object_vars($obj) : $obj;
         foreach ($_arr as $key => $val) {
-            $val = (is_array($val) || is_object($val)) ? $this->object_to_array($val) : $val;
+            $val = (is_array($val) || is_object($val)) ? object_to_array($val) : $val;
             $arr [$key] = $val;
         }
         if (!isset($arr)) {
