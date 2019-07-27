@@ -953,7 +953,41 @@ if (!function_exists('week')) {
     }
 }
 
-if (!function_exists('get_full_week_time')) {
+if (!function_exists('get_full_hour_time')) {
+    /**
+     * 获取一天内的24小时
+     *
+     * @create 2019-02-18 12:48:56
+     * @param string $start_hour
+     * @param string $end_hour
+     * @return array
+     */
+    function get_full_hour_time($start_hour = '00', $end_hour = '23')
+    {
+        $data = [];
+        $i    = 0;
+        date_default_timezone_set('Asia/Shanghai');
+        echo $begin = git_second($start_hour . ':00:00');
+        echo ':';
+        echo $end = git_second($end_hour . ':59:59');
+
+        while (true) {
+            if ($end < $begin) {
+                break;
+            }
+            $data[$i]['date']  = explode(':', get_date_second($end))[0];
+            $data[$i]['start'] = $end - 3599;
+            $data[$i]['end']   = $end;
+
+            $end = strtotime("-1 hour", $end);
+            $i++;
+        }
+
+        return $data;
+    }
+}
+
+if (!function_exists('get_full_day_time')) {
     /**
      * 获取某段时间内完整自然天的时间戳
      *
