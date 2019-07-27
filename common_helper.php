@@ -6,7 +6,7 @@ if (!function_exists('is_json')) {
      *
      * @param $string
      * @return bool
-     * @author jiangbingjie<jiangbinjie@i3020.com>
+     *
      */
     function is_json($string)
     {
@@ -22,7 +22,7 @@ if (!function_exists('is_not_json')) {
      *
      * @param $str
      * @return bool
-     * @author jiangbingjie<jiangbinjie@i3020.com>
+     *
      */
     function is_not_json($str)
     {
@@ -39,7 +39,7 @@ if (!function_exists('create_erweima')) {
      * @param string $lev 可选参数，纠错等级
      * @param string $margin 生成的二维码离边框的距离
      * @return string
-     * @author jiangbingjie<jiangbinjie@i3020.com>
+     *
      */
     function create_erweima($content, $size = '200', $lev = 'L', $margin = '0')
     {
@@ -56,7 +56,7 @@ if (!function_exists('is_https')) {
      *
      * @create 2019-01-29 12:04:26
      * @return bool
-     * @author jiangbingjie<jiangbinjie@i3020.com>
+     *
      */
     function is_https()
     {
@@ -71,6 +71,7 @@ if (!function_exists('is_https')) {
         return false;
     }
 }
+
 if (!function_exists('get_curl_data')) {
     /**
      * 请求远程数据
@@ -78,7 +79,7 @@ if (!function_exists('get_curl_data')) {
      * @param string $url
      * @param array $param
      * @return mixed
-     * @author jiangbingjie<jiangbinjie@i3020.com>
+     *
      */
     function get_curl_data($url, $param = [])
     {
@@ -112,7 +113,7 @@ if (!function_exists('imgToBase64')) {
      * @date 2017-02-20 19:41:22
      * @param string $img_file 传入本地图片地址
      * @return string
-     * @author jiangbingjie<jiangbinjie@i3020.com>
+     *
      */
     function imgToBase64($img_file)
     {
@@ -163,7 +164,7 @@ if (!function_exists('isMobile')) {
      *移动端判断
      *
      * @return bool
-     * @author jiangbingjie<jiangbinjie@i3020.com>
+     *
      */
     function isMobile()
     {
@@ -236,7 +237,7 @@ if (!function_exists('git_second')) {
      *
      * @param int $time
      * @return string
-     * @author jiangbingjie<jiangbinjie@i3020.com>
+     *
      */
     function git_second($time)
     {
@@ -256,7 +257,7 @@ if (!function_exists('diffBetweenTwoDays')) {
      * @param string $day1
      * @param string $day2
      * @return string
-     * @author jiangbingjie<jiangbinjie@i3020.com>
+     *
      */
     function diffBetweenTwoDays($day1, $day2)
     {
@@ -278,7 +279,7 @@ if (!function_exists('get_time')) {
      * 获取时间，采用标准时区。
      *
      * @return string
-     * @author jiangbingjie<jiangbinjie@i3020.com>
+     *
      */
     function get_time()
     {
@@ -294,7 +295,7 @@ if (!function_exists('get_date')) {
      *
      * @param int $time
      * @return string
-     * @author jiangbingjie<jiangbinjie@i3020.com>
+     *
      */
     function get_date($time)
     {
@@ -311,7 +312,7 @@ if (!function_exists('get_date_str')) {
      * @param int $time
      * @param int $time_str
      * @return string
-     * @author jiangbingjie<jiangbinjie@i3020.com>
+     *
      */
     function get_date_str($time, $time_str)
     {
@@ -321,12 +322,25 @@ if (!function_exists('get_date_str')) {
     }
 }
 
+if (!function_exists('is_date')) {
+    /**
+     * 判断是否为日期格式
+     *
+     * @param string $time 时间字符串
+     * @return boolean
+     */
+    function is_date($time)
+    {
+        return strtotime($time);
+    }
+}
+
 if (!function_exists('get_uuid')) {
     /**
      * 获取唯一id
      *
      * @return string
-     * @author jiangbingjie<jiangbinjie@i3020.com>
+     *
      */
     function get_uuid()
     {
@@ -338,7 +352,7 @@ if (!function_exists('getMillisecond')) {
     /**
      * 获取毫秒级别的时间戳
      *
-     * @author jiangbingjie<jiangbinjie@i3020.com>
+     *
      */
     function getMillisecond()
     {
@@ -359,7 +373,7 @@ if (!function_exists('get_date_second')) {
      * @create 2019-01-24 15:21:21
      * @param $seconds
      * @return float|int|string
-     * @author jiangbingjie<jiangbinjie@i3020.com>
+     *
      */
     function get_date_second($seconds)
     {
@@ -380,7 +394,7 @@ if (!function_exists('get_date_after')) {
      *
      * @param int $time
      * @return string
-     * @author jiangbingjie<jiangbinjie@i3020.com>
+     *
      */
     function get_date_after($time)
     {
@@ -396,7 +410,7 @@ if (!function_exists('check_phone')) {
      *
      * @param string $str
      * @return string
-     * @author jiangbingjie<jiangbinjie@i3020.com>
+     *
      */
     function check_phone($str)
     {
@@ -414,7 +428,7 @@ if (!function_exists('check_mail')) {
      *
      * @param string $str
      * @return string
-     * @author jiangbingjie<jiangbinjie@i3020.com>
+     *
      */
     function check_mail($str)
     {
@@ -432,7 +446,7 @@ if (!function_exists('check_int')) {
      *
      * @param string $str
      * @return string
-     * @author jiangbingjie<jiangbinjie@i3020.com>
+     *
      */
     function check_int($str)
     {
@@ -450,7 +464,7 @@ if (!function_exists('get_cn')) {
      *
      * @param string $str
      * @return string
-     * @author jiangbingjie<jiangbinjie@i3020.com>
+     *
      */
     function get_cn($str)
     {
@@ -467,7 +481,7 @@ if (!function_exists('get_int')) {
      *
      * @param string $str
      * @return string
-     * @author jiangbingjie<jiangbinjie@i3020.com>
+     *
      */
     function get_int($str)
     {
@@ -483,7 +497,7 @@ if (!function_exists('get_from_ip')) {
      * 获取ip
      *
      * @return string
-     * @author jiangbingjie<jiangbinjie@i3020.com>
+     *
      */
     function get_from_ip()
     {
@@ -512,9 +526,9 @@ if (!function_exists('sign')) {
      * @param $params
      * @param $secret_key
      * @return string
-     * @author jiaozi<jiaozi@iyenei.com>
      *
-     * @author jiangbingjie<jiangbinjie@i3020.com>
+     *
+     *
      */
     function sign($params, $secret_key)
     {
@@ -536,7 +550,7 @@ if (!function_exists('transformTime')) {
      *
      * @param int $time
      * @return string
-     * @author jiangbingjie<jiangbinjie@i3020.com>
+     *
      */
     function transformTime($time)
     {
@@ -600,7 +614,7 @@ if (!function_exists('pack_input_params')) {
      *
      * @param string $str 用逗号分隔的多个参数
      * @return mixed
-     * @author jiangbingjie<jiangbinjie@i3020.com>
+     *
      */
     function pack_input_params($str)
     {
@@ -619,7 +633,7 @@ if (!function_exists('replace_special_char')) {
      *
      * @param $strParam
      * @return null|string|string[] | 过滤非法字符
-     * @author jiangbingjie<jiangbinjie@i3020.com>
+     *
      */
     function replace_special_char($strParam)
     {
@@ -635,7 +649,7 @@ if (!function_exists('array_to_object')) {
      *
      * @param array $e
      * @return mixed
-     * @author jiangbingjie<jiangbinjie@i3020.com>
+     *
      */
     function array_to_object($e)
     {
@@ -658,7 +672,7 @@ if (!function_exists('object_to_array')) {
      *
      * @param object $obj
      * @return array
-     * @author jiangbingjie<jiangbinjie@i3020.com>
+     *
      */
     function object_to_array($obj)
     {
@@ -681,7 +695,7 @@ if (!function_exists('array_filter_null')) {
      *
      * @param array $data
      * @return array
-     * @author jiangbingjie<jiangbinjie@i3020.com>
+     *
      */
     function array_filter_null(array $data)
     {
@@ -701,7 +715,7 @@ if (!function_exists('get_good_str')) {
      *
      * @param string $ary
      * @return string
-     * @author jiangbingjie<jiangbinjie@i3020.com>
+     *
      */
     function get_good_str($ary)
     {
@@ -733,7 +747,7 @@ if (!function_exists('strip_quotes')) {
      *
      * @param string $str
      * @return    string
-     * @author jiangbingjie<jiangbinjie@i3020.com>
+     *
      */
     function strip_quotes($str)
     {
@@ -750,7 +764,7 @@ if (!function_exists('get_ids')) {
      * @param $value
      * @param $key
      * @return array|获取符合mysql IN的 id数组
-     * @author jiangbingjie<jiangbinjie@i3020.com>
+     *
      */
     function get_ids($array, $value, $key = null)
     {
@@ -766,7 +780,7 @@ if (!function_exists('calculate_summation')) {
      * @param array $data //原始数据
      * @param $field //需要计算的字段
      * @return array
-     * @author jiangbingjie<jiangbinjie@i3020.com>
+     *
      */
     function calculate_summation(array $data, $field)
     {
@@ -873,7 +887,7 @@ if (!function_exists('paging')) {
      * @param $data
      * @param $limit
      * @return array
-     * @author jiangbingjie<jiangbinjie@i3020.com>
+     *
      */
     function paging($data, $limit)
     {
@@ -900,7 +914,7 @@ if (!function_exists('my_rmdir')) {
      * my_rmdir
      *
      * @param string $path
-     * @author jiangbingjie<jiangbinjie@i3020.com>
+     *
      */
     function my_rmdir($path)
     {
@@ -928,7 +942,7 @@ if (!function_exists('week')) {
      * @create 2018-12-12 14:42:00
      * @param string $format
      * @return false|int
-     * @author jiangbingjie<jiangbinjie@i3020.com>
+     *
      */
     function week($format = '')
     {
@@ -947,7 +961,7 @@ if (!function_exists('get_full_week_time')) {
      * @param $begin
      * @param $end
      * @return array
-     * @author jiangbingjie<jiangbinjie@i3020.com>
+     *
      */
     function get_full_day_time($begin, $end)
     {
@@ -973,7 +987,7 @@ if (!function_exists('get_full_week_time')) {
      * @name 获取某段时间内完整自然周的时间戳
      * @param
      * @return array
-     * @author zay
+     *
      */
     function get_full_week_time($start_time, $end_time)
     {
@@ -1012,7 +1026,7 @@ if (!function_exists('get_full_month_time')) {
      * @name 获取某段时间内完整自然月的时间戳
      * @param
      * @return array
-     * @author zay
+     *
      */
     function get_full_month_time($start_time, $end_time)
     {
