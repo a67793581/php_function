@@ -670,7 +670,7 @@ if (!function_exists('object_to_array')) {
     /**
      * 对象转为数组
      *
-     * @param object $obj
+     * @param  $obj
      * @return array
      *
      */
@@ -958,22 +958,23 @@ if (!function_exists('get_full_week_time')) {
      * 获取某段时间内完整自然天的时间戳
      *
      * @create 2019-02-18 12:48:56
-     * @param $begin
-     * @param $end
+     * @param int $begin
+     * @param int $end
      * @return array
      *
      */
-    function get_full_day_time($begin, $end)
+    function get_full_day_time( $begin, $end)
     {
         $data = [];
         $i = 0;
         while (true) {
-            $data[$i]['date'] = date('Y-m-d', $end);
-            $data[$i]['start'] = strtotime(date('Y-m-d', $end) . ' 00:00:00');
-            $data[$i]['end'] = strtotime(date('Y-m-d', $end) . ' 23:59:59');
             if ($end < $begin) {
                 break;
             }
+            $data[$i]['date'] = date('Y-m-d', $end);
+            $data[$i]['start'] = strtotime(date('Y-m-d', $end) . ' 00:00:00');
+            $data[$i]['end'] = strtotime(date('Y-m-d', $end) . ' 23:59:59');
+
             $end = strtotime("-1 day", $end);
             $i++;
         }
@@ -984,10 +985,11 @@ if (!function_exists('get_full_week_time')) {
 
 if (!function_exists('get_full_week_time')) {
     /**
-     * @name 获取某段时间内完整自然周的时间戳
-     * @param
+     *  获取某段时间内完整自然周的时间戳
+     * 
+     * @param int $start_time
+     * @param int $end_time
      * @return array
-     *
      */
     function get_full_week_time($start_time, $end_time)
     {
@@ -1023,10 +1025,11 @@ if (!function_exists('get_full_week_time')) {
 
 if (!function_exists('get_full_month_time')) {
     /**
-     * @name 获取某段时间内完整自然月的时间戳
-     * @param
-     * @return array
+     * 获取某段时间内完整自然月的时间戳
      *
+     * @param $start_time
+     * @param $end_time
+     * @return array
      */
     function get_full_month_time($start_time, $end_time)
     {
