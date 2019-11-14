@@ -1165,11 +1165,10 @@ if (!function_exists('validateUrl')) {
     /**
      * 验证属性是否为有效的URL
      *
-     * @param string $attribute
      * @param mixed $value
      * @return bool
      */
-    function validateUrl($attribute, $value)
+    function validateUrl($value)
     {
         if (!is_string($value)) {
             return false;
@@ -1204,11 +1203,10 @@ if (!function_exists('validateActiveUrl')) {
     /**
      * 验证属性是否为解析成功的URL
      *
-     * @param string $attribute
      * @param mixed $value
      * @return bool
      */
-    function validateActiveUrl($attribute, $value)
+    function validateActiveUrl( $value)
     {
         if (!is_string($value)) {
             return false;
