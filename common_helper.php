@@ -44,7 +44,7 @@ if (!function_exists('create_erweima')) {
     function create_erweima($content, $size = '200', $lev = 'L', $margin = '0')
     {
         $content = urlencode($content);
-        $image = '<img src="http://chart.apis.google.com/chart?chs=' . $size . 'x' . $size . '&amp;cht=qr&chld=' . $lev . '|' . $margin . '&amp;chl=' . $content . '"  widht="' . $size . '" height="' . $size . '" />';
+        $image   = '<img src="http://chart.apis.google.com/chart?chs=' . $size . 'x' . $size . '&amp;cht=qr&chld=' . $lev . '|' . $margin . '&amp;chl=' . $content . '"  widht="' . $size . '" height="' . $size . '" />';
 
         return $image;
     }
@@ -62,9 +62,11 @@ if (!function_exists('is_https')) {
     {
         if (!empty($_SERVER['HTTPS']) && strtolower($_SERVER['HTTPS']) !== 'off') {
             return true;
-        } elseif (isset($_SERVER['HTTP_X_FORWARDED_PROTO']) && $_SERVER['HTTP_X_FORWARDED_PROTO'] === 'https') {
+        }
+        elseif (isset($_SERVER['HTTP_X_FORWARDED_PROTO']) && $_SERVER['HTTP_X_FORWARDED_PROTO'] === 'https') {
             return true;
-        } elseif (!empty($_SERVER['HTTP_FRONT_END_HTTPS']) && strtolower($_SERVER['HTTP_FRONT_END_HTTPS']) !== 'off') {
+        }
+        elseif (!empty($_SERVER['HTTP_FRONT_END_HTTPS']) && strtolower($_SERVER['HTTP_FRONT_END_HTTPS']) !== 'off') {
             return true;
         }
 
@@ -121,14 +123,14 @@ if (!function_exists('imgToBase64')) {
         $img_base64 = '';
         if (file_exists($img_file)) {
             $app_img_file = $img_file; // 图片路径
-            $img_info = getimagesize($app_img_file); // 取得图片的大小，类型等
+            $img_info     = getimagesize($app_img_file); // 取得图片的大小，类型等
 
             //echo '<pre>' . print_r($img_info, true) . '</pre><br>';
             $fp = fopen($app_img_file, "r"); // 图片是否可读权限
 
             if ($fp) {
-                $filesize = filesize($app_img_file);
-                $content = fread($fp, $filesize);
+                $filesize     = filesize($app_img_file);
+                $content      = fread($fp, $filesize);
                 $file_content = chunk_split(base64_encode($content)); // base64编码
 
                 switch ($img_info[2]) {
@@ -222,7 +224,15 @@ if (!function_exists('isMobile')) {
         if (isset($_SERVER['HTTP_ACCEPT'])) {
             // 如果只支持wml并且不支持html那一定是移动设备
             // 如果支持wml和html但是wml在html之前则是移动设备
-            if ((strpos($_SERVER['HTTP_ACCEPT'], 'vnd.wap.wml') !== false) && (strpos($_SERVER['HTTP_ACCEPT'], 'text/html') === false || (strpos($_SERVER['HTTP_ACCEPT'], 'vnd.wap.wml') < strpos($_SERVER['HTTP_ACCEPT'], 'text/html')))) {
+            if (
+                (strpos($_SERVER['HTTP_ACCEPT'], 'vnd.wap.wml') !== false) && (strpos(
+                        $_SERVER['HTTP_ACCEPT'],
+                        'text/html'
+                    ) === false || (strpos($_SERVER['HTTP_ACCEPT'], 'vnd.wap.wml') < strpos(
+                            $_SERVER['HTTP_ACCEPT'],
+                            'text/html'
+                        )))
+            ) {
                 return true;
             }
         }
@@ -241,9 +251,9 @@ if (!function_exists('git_second')) {
      */
     function git_second($time)
     {
-        $h = substr($time, -8, 2) * 3600;
-        $m = substr($time, -5, 2) * 60;
-        $s = substr($time, -2, 2);
+        $h   = substr($time, -8, 2) * 3600;
+        $m   = substr($time, -5, 2) * 60;
+        $s   = substr($time, -2, 2);
         $res = $h + $m + $s;
 
         return $res;
@@ -265,7 +275,7 @@ if (!function_exists('diffBetweenTwoDays')) {
         $second2 = strtotime($day2);
 
         if ($second1 < $second2) {
-            $tmp = $second2;
+            $tmp     = $second2;
             $second2 = $second1;
             $second1 = $tmp;
         }
@@ -357,10 +367,10 @@ if (!function_exists('getMillisecond')) {
     function getMillisecond()
     {
         //获取毫秒的时间戳
-        $time = explode(" ", microtime());
-        $time = $time[1] . ($time[0] * 1000);
+        $time  = explode(" ", microtime());
+        $time  = $time[1] . ($time[0] * 1000);
         $time2 = explode(".", $time);
-        $time = $time2[0];
+        $time  = $time2[0];
 
         return $time;
     }
@@ -418,7 +428,10 @@ if (!function_exists('check_phone')) {
             return true;
         }
 
-        return preg_match("/^((\(\d{2,3}\))|(\d{3}[\-]?))?(\(0\d{2,3}\)|0\d{2,3}-)?[1-9]\d{6,7}([\-]?\d{1,4})?$/", $str);
+        return preg_match(
+            "/^((\(\d{2,3}\))|(\d{3}[\-]?))?(\(0\d{2,3}\)|0\d{2,3}-)?[1-9]\d{6,7}([\-]?\d{1,4})?$/",
+            $str
+        );
     }
 }
 
@@ -503,15 +516,20 @@ if (!function_exists('get_from_ip')) {
     {
         if (getenv('HTTP_CLIENT_IP')) {
             $ip = getenv('HTTP_CLIENT_IP');
-        } elseif (getenv('HTTP_X_FORWARDED_FOR')) {
+        }
+        elseif (getenv('HTTP_X_FORWARDED_FOR')) {
             $ip = getenv('HTTP_X_FORWARDED_FOR');
-        } elseif (getenv('HTTP_X_FORWARDED')) {
+        }
+        elseif (getenv('HTTP_X_FORWARDED')) {
             $ip = getenv('HTTP_X_FORWARDED');
-        } elseif (getenv('HTTP_FORWARDED_FOR')) {
+        }
+        elseif (getenv('HTTP_FORWARDED_FOR')) {
             $ip = getenv('HTTP_FORWARDED_FOR');
-        } elseif (getenv('HTTP_FORWARDED')) {
+        }
+        elseif (getenv('HTTP_FORWARDED')) {
             $ip = getenv('HTTP_FORWARDED');
-        } else {
+        }
+        else {
             $ip = $_SERVER['REMOTE_ADDR'];
         }
 
@@ -678,7 +696,7 @@ if (!function_exists('object_to_array')) {
     {
         $_arr = is_object($obj) ? get_object_vars($obj) : $obj;
         foreach ($_arr as $key => $val) {
-            $val = (is_array($val) || is_object($val)) ? object_to_array($val) : $val;
+            $val        = (is_array($val) || is_object($val)) ? object_to_array($val) : $val;
             $arr [$key] = $val;
         }
         if (!isset($arr)) {
@@ -818,9 +836,9 @@ if (!function_exists('array_sort_tag')) {
         $arr = array_values($arr);
 
         $key1name = $arr[0][$key1];
-        $temp = [];
-        $i = 0;
-        $length = count($arr);
+        $temp     = [];
+        $i        = 0;
+        $length   = count($arr);
         foreach ($arr as $k => $v) {
             if ($v[$key1] == $key1name) {
                 $temp[] = $arr[$k];
@@ -832,7 +850,8 @@ if (!function_exists('array_sort_tag')) {
                         $i++;
                     }
                 }
-            } else {
+            }
+            else {
                 $temp = array_sort($temp, $key2, $type2);
                 $temp = array_values($temp);
                 foreach ($temp as $key => $val) {
@@ -840,8 +859,8 @@ if (!function_exists('array_sort_tag')) {
                     $i++;
                 }
                 $key1name = $v[$key1];
-                $temp = [];
-                $temp[] = $arr[$k];
+                $temp     = [];
+                $temp[]   = $arr[$k];
             }
         }
 
@@ -866,7 +885,8 @@ if (!function_exists('array_sort')) {
         }
         if ($type == 'asc') {
             asort($keys_value);//对键值排序 $k不动
-        } else {
+        }
+        else {
             arsort($keys_value);
         }
         reset($keys_value);
@@ -927,7 +947,8 @@ if (!function_exists('my_rmdir')) {
             if (is_dir($path)) {
                 my_rmdir($path);
                 rmdir($path);
-            } else {
+            }
+            else {
                 unlink($path);
             }
         }
@@ -946,7 +967,7 @@ if (!function_exists('week')) {
      */
     function week($format = '')
     {
-        $w = date('w');
+        $w    = date('w');
         $week = $w == 0 ? 'last week ' : 'this week ';
 
         return strtotime($week . $format);
@@ -997,17 +1018,17 @@ if (!function_exists('get_full_day_time')) {
      * @return array
      *
      */
-    function get_full_day_time( $begin, $end)
+    function get_full_day_time($begin, $end)
     {
         $data = [];
-        $i = 0;
+        $i    = 0;
         while (true) {
             if ($end < $begin) {
                 break;
             }
-            $data[$i]['date'] = date('Y-m-d', $end);
+            $data[$i]['date']  = date('Y-m-d', $end);
             $data[$i]['start'] = strtotime(date('Y-m-d', $end) . ' 00:00:00');
-            $data[$i]['end'] = strtotime(date('Y-m-d', $end) . ' 23:59:59');
+            $data[$i]['end']   = strtotime(date('Y-m-d', $end) . ' 23:59:59');
 
             $end = strtotime("-1 day", $end);
             $i++;
@@ -1020,14 +1041,14 @@ if (!function_exists('get_full_day_time')) {
 if (!function_exists('get_full_week_time')) {
     /**
      *  获取某段时间内完整自然周的时间戳
-     * 
+     *
      * @param int $start_time
      * @param int $end_time
      * @return array
      */
     function get_full_week_time($start_time, $end_time)
     {
-        $end = $end_time;
+        $end  = $end_time;
         $data = [];
         while (true) {
             if (date('w', $end) == 0) {
@@ -1040,7 +1061,8 @@ if (!function_exists('get_full_week_time')) {
                     break;
                 }
                 $end = strtotime("-1 week", $end);
-            } else {
+            }
+            else {
                 $end = strtotime("-1 day", $end);
                 if (date('Y-m-d', $end) <= date('Y-m-d', $start_time)) {
                     break;
@@ -1067,7 +1089,7 @@ if (!function_exists('get_full_month_time')) {
      */
     function get_full_month_time($start_time, $end_time)
     {
-        $end = strtotime(date('Y-m-d 23:59:59', $end_time));
+        $end  = strtotime(date('Y-m-d 23:59:59', $end_time));
         $data = [];
         while (true) {
             if (date('Y-m-t', $end) == date('Y-m-d', $end)) {
@@ -1080,8 +1102,9 @@ if (!function_exists('get_full_month_time')) {
                     break;
                 }
                 $begin = strtotime('-1 month', strtotime(date('Y-m-01 00:00:00', $end)));
-                $end = strtotime(date('Y-m-t', $begin)) + 86399;
-            } else {
+                $end   = strtotime(date('Y-m-t', $begin)) + 86399;
+            }
+            else {
                 $end = strtotime("-1 day", $end);
                 if (date('Y-m-d', $end) <= date('Y-m-d', $start_time)) {
                     break;
@@ -1106,7 +1129,8 @@ if (!function_exists('generate_tree')) {
         foreach ($items as $item) {
             if (isset($items[$item['pid']])) {
                 $items[$item['pid']]['son'][] = &$items[$item['id']];
-            } else {
+            }
+            else {
                 $tree[] = &$items[$item['id']];
             }
         }
@@ -1134,5 +1158,71 @@ if (!function_exists('add_tree')) {
             'pid' => $pid,
             'name' => $name,
         ];
+    }
+}
+
+if (!function_exists('validateUrl')) {
+    /**
+     * 验证属性是否为有效的URL
+     *
+     * @param string $attribute
+     * @param mixed $value
+     * @return bool
+     */
+    function validateUrl($attribute, $value)
+    {
+        if (!is_string($value)) {
+            return false;
+        }
+
+        /*
+         * This pattern is derived from Symfony\Component\Validator\Constraints\UrlValidator (2.7.4).
+         *
+         * (c) Fabien Potencier <fabien@symfony.com> http://symfony.com
+         */
+        $pattern = '~^
+            ((aaa|aaas|about|acap|acct|acr|adiumxtra|afp|afs|aim|apt|attachment|aw|barion|beshare|bitcoin|blob|bolo|callto|cap|chrome|chrome-extension|cid|coap|coaps|com-eventbrite-attendee|content|crid|cvs|data|dav|dict|dlna-playcontainer|dlna-playsingle|dns|dntp|dtn|dvb|ed2k|example|facetime|fax|feed|feedready|file|filesystem|finger|fish|ftp|geo|gg|git|gizmoproject|go|gopher|gtalk|h323|ham|hcp|http|https|iax|icap|icon|im|imap|info|iotdisco|ipn|ipp|ipps|irc|irc6|ircs|iris|iris.beep|iris.lwz|iris.xpc|iris.xpcs|itms|jabber|jar|jms|keyparc|lastfm|ldap|ldaps|magnet|mailserver|mailto|maps|market|message|mid|mms|modem|ms-help|ms-settings|ms-settings-airplanemode|ms-settings-bluetooth|ms-settings-camera|ms-settings-cellular|ms-settings-cloudstorage|ms-settings-emailandaccounts|ms-settings-language|ms-settings-location|ms-settings-lock|ms-settings-nfctransactions|ms-settings-notifications|ms-settings-power|ms-settings-privacy|ms-settings-proximity|ms-settings-screenrotation|ms-settings-wifi|ms-settings-workplace|msnim|msrp|msrps|mtqp|mumble|mupdate|mvn|news|nfs|ni|nih|nntp|notes|oid|opaquelocktoken|pack|palm|paparazzi|pkcs11|platform|pop|pres|prospero|proxy|psyc|query|redis|rediss|reload|res|resource|rmi|rsync|rtmfp|rtmp|rtsp|rtsps|rtspu|secondlife|s3|service|session|sftp|sgn|shttp|sieve|sip|sips|skype|smb|sms|smtp|snews|snmp|soap.beep|soap.beeps|soldat|spotify|ssh|steam|stun|stuns|submit|svn|tag|teamspeak|tel|teliaeid|telnet|tftp|things|thismessage|tip|tn3270|turn|turns|tv|udp|unreal|urn|ut2004|vemmi|ventrilo|videotex|view-source|wais|webcal|ws|wss|wtai|wyciwyg|xcon|xcon-userid|xfire|xmlrpc\.beep|xmlrpc.beeps|xmpp|xri|ymsgr|z39\.50|z39\.50r|z39\.50s))://                                 # protocol
+            (([\pL\pN-]+:)?([\pL\pN-]+)@)?          # basic auth
+            (
+                ([\pL\pN\pS\-\.])+(\.?([\pL]|xn\-\-[\pL\pN-]+)+\.?) # a domain name
+                    |                                              # or
+                \d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}                 # an IP address
+                    |                                              # or
+                \[
+                    (?:(?:(?:(?:(?:(?:(?:[0-9a-f]{1,4})):){6})(?:(?:(?:(?:(?:[0-9a-f]{1,4})):(?:(?:[0-9a-f]{1,4})))|(?:(?:(?:(?:(?:25[0-5]|(?:[1-9]|1[0-9]|2[0-4])?[0-9]))\.){3}(?:(?:25[0-5]|(?:[1-9]|1[0-9]|2[0-4])?[0-9])))))))|(?:(?:::(?:(?:(?:[0-9a-f]{1,4})):){5})(?:(?:(?:(?:(?:[0-9a-f]{1,4})):(?:(?:[0-9a-f]{1,4})))|(?:(?:(?:(?:(?:25[0-5]|(?:[1-9]|1[0-9]|2[0-4])?[0-9]))\.){3}(?:(?:25[0-5]|(?:[1-9]|1[0-9]|2[0-4])?[0-9])))))))|(?:(?:(?:(?:(?:[0-9a-f]{1,4})))?::(?:(?:(?:[0-9a-f]{1,4})):){4})(?:(?:(?:(?:(?:[0-9a-f]{1,4})):(?:(?:[0-9a-f]{1,4})))|(?:(?:(?:(?:(?:25[0-5]|(?:[1-9]|1[0-9]|2[0-4])?[0-9]))\.){3}(?:(?:25[0-5]|(?:[1-9]|1[0-9]|2[0-4])?[0-9])))))))|(?:(?:(?:(?:(?:(?:[0-9a-f]{1,4})):){0,1}(?:(?:[0-9a-f]{1,4})))?::(?:(?:(?:[0-9a-f]{1,4})):){3})(?:(?:(?:(?:(?:[0-9a-f]{1,4})):(?:(?:[0-9a-f]{1,4})))|(?:(?:(?:(?:(?:25[0-5]|(?:[1-9]|1[0-9]|2[0-4])?[0-9]))\.){3}(?:(?:25[0-5]|(?:[1-9]|1[0-9]|2[0-4])?[0-9])))))))|(?:(?:(?:(?:(?:(?:[0-9a-f]{1,4})):){0,2}(?:(?:[0-9a-f]{1,4})))?::(?:(?:(?:[0-9a-f]{1,4})):){2})(?:(?:(?:(?:(?:[0-9a-f]{1,4})):(?:(?:[0-9a-f]{1,4})))|(?:(?:(?:(?:(?:25[0-5]|(?:[1-9]|1[0-9]|2[0-4])?[0-9]))\.){3}(?:(?:25[0-5]|(?:[1-9]|1[0-9]|2[0-4])?[0-9])))))))|(?:(?:(?:(?:(?:(?:[0-9a-f]{1,4})):){0,3}(?:(?:[0-9a-f]{1,4})))?::(?:(?:[0-9a-f]{1,4})):)(?:(?:(?:(?:(?:[0-9a-f]{1,4})):(?:(?:[0-9a-f]{1,4})))|(?:(?:(?:(?:(?:25[0-5]|(?:[1-9]|1[0-9]|2[0-4])?[0-9]))\.){3}(?:(?:25[0-5]|(?:[1-9]|1[0-9]|2[0-4])?[0-9])))))))|(?:(?:(?:(?:(?:(?:[0-9a-f]{1,4})):){0,4}(?:(?:[0-9a-f]{1,4})))?::)(?:(?:(?:(?:(?:[0-9a-f]{1,4})):(?:(?:[0-9a-f]{1,4})))|(?:(?:(?:(?:(?:25[0-5]|(?:[1-9]|1[0-9]|2[0-4])?[0-9]))\.){3}(?:(?:25[0-5]|(?:[1-9]|1[0-9]|2[0-4])?[0-9])))))))|(?:(?:(?:(?:(?:(?:[0-9a-f]{1,4})):){0,5}(?:(?:[0-9a-f]{1,4})))?::)(?:(?:[0-9a-f]{1,4})))|(?:(?:(?:(?:(?:(?:[0-9a-f]{1,4})):){0,6}(?:(?:[0-9a-f]{1,4})))?::))))
+                \]  # an IPv6 address
+            )
+            (:[0-9]+)?                              # a port (optional)
+            (/?|/\S+|\?\S*|\#\S*)                   # a /, nothing, a / with something, a query or a fragment
+        $~ixu';
+
+        return preg_match($pattern, $value) > 0;
+    }
+}
+
+if (!function_exists('validateActiveUrl')) {
+    /**
+     * 验证属性是否为解析成功的URL
+     *
+     * @param string $attribute
+     * @param mixed $value
+     * @return bool
+     */
+    function validateActiveUrl($attribute, $value)
+    {
+        if (!is_string($value)) {
+            return false;
+        }
+
+        if ($url = parse_url($value, PHP_URL_HOST)) {
+            try {
+                return count(dns_get_record($url, DNS_A | DNS_AAAA)) > 0;
+            }
+            catch (Exception $e) {
+                return false;
+            }
+        }
+
+        return false;
     }
 }
