@@ -545,19 +545,13 @@ if (!function_exists('sign')) {
      * @param $secret_key
      * @return string
      *
-     *
-     *
+     * @author jiangbingjie<jiangbinjie@i3020.com>
      */
-    function sign($params, $secret_key)
+    function sign(array $params, $secret_key)
     {
-        ksort($params);
-        $sign = '';
-        foreach ($params as $key => $val) {
-            $sign .= $key . $val;
-        }
-        $sign .= 'secret_key' . $secret_key;
+        $sign = http_build_query($params);
+        $sign .= '&secret_key' . $secret_key;
         $sign = md5($sign);
-
         return $sign;
     }
 }
