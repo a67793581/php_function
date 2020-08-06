@@ -16,20 +16,6 @@ if (!function_exists('is_json')) {
     }
 }
 
-if (!function_exists('is_not_json')) {
-    /**
-     * 判断数据不是JSON格式
-     *
-     * @param $str
-     * @return bool
-     *
-     */
-    function is_not_json($str)
-    {
-        return is_null(json_decode($str));
-    }
-}
-
 if (!function_exists('create_erweima')) {
     /**
      * 利用google api生成二维码图片
@@ -336,15 +322,15 @@ if (!function_exists('is_date')) {
 }
 
 if (!function_exists('get_uuid')) {
-    /**
-     * 获取唯一id
-     *
-     * @return string
-     *
-     */
-    function get_uuid()
+	/**
+	 * 获取唯一id
+	 *
+	 * @param string $prefix
+	 * @return string
+	 */
+    function get_uuid($prefix='')
     {
-        return md5(uniqid(md5(microtime(true)), true));
+        return uniqid($prefix, true);
     }
 }
 
@@ -532,21 +518,16 @@ if (!function_exists('sign')) {
      */
     function sign($params, $secret_key)
     {
-        ksort($params);
-        $sign = '';
-        foreach ($params as $key => $val) {
-            $sign .= $key . $val;
-        }
-        $sign .= 'secret_key' . $secret_key;
-        $sign = md5($sign);
-
-        return $sign;
+		unset($params['sign']);
+		ksort($params);
+		$params['secret_key'] = $secret_key;
+		return md5(http_build_query($params));
     }
 }
 
 if (!function_exists('transformTime')) {
     /**
-     * 时间戳
+     * 时间戳换算成距今时间
      *
      * @param int $time
      * @return string
