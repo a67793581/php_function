@@ -16,7 +16,21 @@ if (!function_exists('is_json')) {
     }
 }
 
-if (!function_exists('create_erweima')) {
+if (!function_exists('is_not_json')) {
+    /**
+     * 判断数据不是JSON格式
+     *
+     * @param $str
+     * @return bool
+     *
+     */
+    function is_not_json($str)
+    {
+        return !is_json($str);
+    }
+}
+
+if (!function_exists('create_qr_code')) {
     /**
      * 利用google api生成二维码图片
      *
@@ -27,12 +41,10 @@ if (!function_exists('create_erweima')) {
      * @return string
      *
      */
-    function create_erweima($content, $size = '200', $lev = 'L', $margin = '0')
+    function create_qr_code($content, $size = '200', $lev = 'L', $margin = '0')
     {
         $content = urlencode($content);
-        $image   = '<img src="http://chart.apis.google.com/chart?chs=' . $size . 'x' . $size . '&amp;cht=qr&chld=' . $lev . '|' . $margin . '&amp;chl=' . $content . '"  widht="' . $size . '" height="' . $size . '" />';
-
-        return $image;
+        return '<img src="http://chart.apis.google.com/chart?chs=' . $size . 'x' . $size . '&amp;cht=qr&chld=' . $lev . '|' . $margin . '&amp;chl=' . $content . '"  widht="' . $size . '" height="' . $size . '" />';
     }
 }
 
@@ -48,11 +60,9 @@ if (!function_exists('is_https')) {
     {
         if (!empty($_SERVER['HTTPS']) && strtolower($_SERVER['HTTPS']) !== 'off') {
             return true;
-        }
-        elseif (isset($_SERVER['HTTP_X_FORWARDED_PROTO']) && $_SERVER['HTTP_X_FORWARDED_PROTO'] === 'https') {
+        } elseif (isset($_SERVER['HTTP_X_FORWARDED_PROTO']) && $_SERVER['HTTP_X_FORWARDED_PROTO'] === 'https') {
             return true;
-        }
-        elseif (!empty($_SERVER['HTTP_FRONT_END_HTTPS']) && strtolower($_SERVER['HTTP_FRONT_END_HTTPS']) !== 'off') {
+        } elseif (!empty($_SERVER['HTTP_FRONT_END_HTTPS']) && strtolower($_SERVER['HTTP_FRONT_END_HTTPS']) !== 'off') {
             return true;
         }
 
@@ -237,12 +247,10 @@ if (!function_exists('git_second')) {
      */
     function git_second($time)
     {
-        $h   = substr($time, -8, 2) * 3600;
-        $m   = substr($time, -5, 2) * 60;
-        $s   = substr($time, -2, 2);
-        $res = $h + $m + $s;
-
-        return $res;
+        $h = substr($time, -8, 2) * 3600;
+        $m = substr($time, -5, 2) * 60;
+        $s = substr($time, -2, 2);
+        return $h + $m + $s;
     }
 }
 
@@ -297,7 +305,7 @@ if (!function_exists('get_date')) {
     {
         date_default_timezone_set('PRC');
 
-        return date("Y-m-d", mktime(0, 0, 0, date("m"), date("d") - (int) $time, date("y")));
+        return date("Y-m-d", mktime(0, 0, 0, date("m"), date("d") - (int)$time, date("y")));
     }
 }
 
@@ -318,40 +326,40 @@ if (!function_exists('get_date_str')) {
     }
 }
 if (!function_exists('get_distance')) {
-	/**
-	 * 计算两点地理坐标之间的距离
-	 *
-	 * @param float $longitude1 起点经度
-	 * @param float $latitude1 起点纬度
-	 * @param float $longitude2 终点经度
-	 * @param float $latitude2 终点纬度
-	 * @param Int $unit 单位 1:米 2:公里
-	 * @param Int $decimal 精度 保留小数位数
-	 * @return float
-	 */
-	function get_distance($longitude1, $latitude1, $longitude2, $latitude2, $unit = 2, $decimal = 10)
-	{
+    /**
+     * 计算两点地理坐标之间的距离
+     *
+     * @param float $longitude1 起点经度
+     * @param float $latitude1 起点纬度
+     * @param float $longitude2 终点经度
+     * @param float $latitude2 终点纬度
+     * @param Int $unit 单位 1:米 2:公里
+     * @param Int $decimal 精度 保留小数位数
+     * @return float
+     */
+    function get_distance($longitude1, $latitude1, $longitude2, $latitude2, $unit = 2, $decimal = 10)
+    {
 
-		$EARTH_RADIUS = 6370.996; // 地球半径系数
+        $EARTH_RADIUS = 6370.996; // 地球半径系数
 
-		$radLat1 = $latitude1 * M_PI / 180.0;
-		$radLat2 = $latitude2 * M_PI / 180.0;
+        $radLat1 = $latitude1 * M_PI / 180.0;
+        $radLat2 = $latitude2 * M_PI / 180.0;
 
-		$radLng1 = $longitude1 * M_PI / 180.0;
-		$radLng2 = $longitude2 * M_PI / 180.0;
+        $radLng1 = $longitude1 * M_PI / 180.0;
+        $radLng2 = $longitude2 * M_PI / 180.0;
 
-		$a = $radLat1 - $radLat2;
-		$b = $radLng1 - $radLng2;
+        $a = $radLat1 - $radLat2;
+        $b = $radLng1 - $radLng2;
 
-		$distance = 2 * asin(sqrt(pow(sin($a / 2), 2) + cos($radLat1) * cos($radLat2) * pow(sin($b / 2), 2)));
-		$distance = $distance * $EARTH_RADIUS;
+        $distance = 2 * asin(sqrt(pow(sin($a / 2), 2) + cos($radLat1) * cos($radLat2) * pow(sin($b / 2), 2)));
+        $distance = $distance * $EARTH_RADIUS;
 
-		if ($unit == 1) {
-			$distance = $distance * 1000;
-		}
+        if ($unit == 1) {
+            $distance = $distance * 1000;
+        }
 
-		return round($distance, $decimal);
-	}
+        return round($distance, $decimal);
+    }
 }
 if (!function_exists('is_date')) {
     /**
@@ -418,7 +426,7 @@ if (!function_exists('get_date_after')) {
     {
         date_default_timezone_set('PRC');
 
-        return date("Y-m-d", mktime(0, 0, 0, date("m"), date("d") + (int) $time, date("y")));
+        return date("Y-m-d", mktime(0, 0, 0, date("m"), date("d") + (int)$time, date("y")));
     }
 }
 
@@ -457,7 +465,7 @@ if (!function_exists('check_mail')) {
             return true;
         }
 
-        return preg_match("/^[A-Z_a-z0-9-\.]+@([A-Z_a-z0-9-]+\.)+[a-z0-9A-Z]{2,4}$/", $str);
+        return preg_match("/^[A-Z_a-z0-9-.]+@([A-Z_a-z0-9-]+\.)+[a-z0-9A-Z]{2,4}$/", $str);
     }
 }
 
@@ -490,9 +498,7 @@ if (!function_exists('get_cn')) {
     function get_cn($str)
     {
         preg_match_all('/[\x{4e00}-\x{9fff}]+/u', $str, $matches);
-        $cn = join('', $matches[0]);
-
-        return $cn;
+        return join('', $matches[0]);
     }
 }
 
@@ -507,9 +513,7 @@ if (!function_exists('get_int')) {
     function get_int($str)
     {
         preg_match_all('/[\d]+/u', $str, $matches);
-        $int = join('', $matches[0]);
-
-        return $int;
+        return join('', $matches[0]);
     }
 }
 
@@ -524,20 +528,15 @@ if (!function_exists('get_from_ip')) {
     {
         if (getenv('HTTP_CLIENT_IP')) {
             $ip = getenv('HTTP_CLIENT_IP');
-        }
-        elseif (getenv('HTTP_X_FORWARDED_FOR')) {
+        } elseif (getenv('HTTP_X_FORWARDED_FOR')) {
             $ip = getenv('HTTP_X_FORWARDED_FOR');
-        }
-        elseif (getenv('HTTP_X_FORWARDED')) {
+        } elseif (getenv('HTTP_X_FORWARDED')) {
             $ip = getenv('HTTP_X_FORWARDED');
-        }
-        elseif (getenv('HTTP_FORWARDED_FOR')) {
+        } elseif (getenv('HTTP_FORWARDED_FOR')) {
             $ip = getenv('HTTP_FORWARDED_FOR');
-        }
-        elseif (getenv('HTTP_FORWARDED')) {
+        } elseif (getenv('HTTP_FORWARDED')) {
             $ip = getenv('HTTP_FORWARDED');
-        }
-        else {
+        } else {
             $ip = $_SERVER['REMOTE_ADDR'];
         }
 
@@ -557,104 +556,104 @@ if (!function_exists('sign')) {
      */
     function sign(array $params, $secret_key)
     {
-		unset($params['sign']);
-		ksort($params);
-		$params['secret_key'] = $secret_key;
-		return md5(http_build_query($params));
+        unset($params['sign']);
+        ksort($params);
+        $params['secret_key'] = $secret_key;
+        return md5(http_build_query($params));
     }
 }
 if (!function_exists('desensitize')) {
-	/**
-	 * 对字符串脱敏
-	 * @param $string
-	 * @param int $start
-	 * @param int $length
-	 * @param string $re
-	 * @return string
-	 */
-	function desensitize($string, $start = 0, $length = 0, $re = '*')
-	{
-		if (empty($string) || empty($length) || empty($re)) return $string;
-		$end     = $start + $length;
-		$strlen  = mb_strlen($string);
-		$str_arr = array();
-		for ($i = 0; $i < $strlen; $i++) {
-			if ($i >= $start && $i < $end)
-				$str_arr[] = $re;
-			else
-				$str_arr[] = mb_substr($string, $i, 1);
-		}
-		return implode('', $str_arr);
-	}
+    /**
+     * 对字符串脱敏
+     * @param $string
+     * @param int $start
+     * @param int $length
+     * @param string $re
+     * @return string
+     */
+    function desensitize($string, $start = 0, $length = 0, $re = '*')
+    {
+        if (empty($string) || empty($length) || empty($re)) return $string;
+        $end     = $start + $length;
+        $strlen  = mb_strlen($string);
+        $str_arr = array();
+        for ($i = 0; $i < $strlen; $i++) {
+            if ($i >= $start && $i < $end)
+                $str_arr[] = $re;
+            else
+                $str_arr[] = mb_substr($string, $i, 1);
+        }
+        return implode('', $str_arr);
+    }
 }
 if (!function_exists('is_serialized')) {
-	/**
-	 * 判断是否虚拟化数据
-	 * @param $data
-	 * @return bool
-	 */
-	function is_serialized($data)
-	{
-		$data = trim($data);
-		if ('N;' == $data) {
-			return true;
-		}
-		if (!preg_match('/^([adObis]):/', $data, $badions)) {
-			return false;
-		}
-		switch ($badions[1]) {
-			case 'a' :
-			case 'O' :
-			case 's' :
-				if (preg_match("/^{$badions[1]}:[0-9]+:.*[;}]\$/s", $data)) {
-					return true;
-				}
-				break;
-			case 'b' :
-			case 'i' :
-			case 'd' :
-				if (preg_match("/^{$badions[1]}:[0-9.E-]+;\$/", $data)) {
-					return true;
-				}
-				break;
-		}
+    /**
+     * 判断是否虚拟化数据
+     * @param $data
+     * @return bool
+     */
+    function is_serialized($data)
+    {
+        $data = trim($data);
+        if ('N;' == $data) {
+            return true;
+        }
+        if (!preg_match('/^([adObis]):/', $data, $badions)) {
+            return false;
+        }
+        switch ($badions[1]) {
+            case 'a' :
+            case 'O' :
+            case 's' :
+                if (preg_match("/^{$badions[1]}:[0-9]+:.*[;}]\$/s", $data)) {
+                    return true;
+                }
+                break;
+            case 'b' :
+            case 'i' :
+            case 'd' :
+                if (preg_match("/^{$badions[1]}:[0-9.E-]+;\$/", $data)) {
+                    return true;
+                }
+                break;
+        }
 
-		return false;
-	}
+        return false;
+    }
 }
 if (!function_exists('get_uuid')) {
-	/**
-	 * 获取唯一id
-	 *
-	 * @param string $prefix
-	 * @return string
-	 */
-	function get_uuid($prefix='')
-	{
-		return uniqid($prefix, true);
-	}
+    /**
+     * 获取唯一id
+     *
+     * @param string $prefix
+     * @return string
+     */
+    function get_uuid($prefix = '')
+    {
+        return uniqid($prefix, true);
+    }
 }
 
 if (!function_exists('guid')) {
-	/**
-	 * 返回guid
-	 * @return string
-	 */
-	function guid()
-	{
-		if (function_exists('com_create_guid')) {
-			return com_create_guid();
-		} else {
-			mt_srand((double)microtime() * 10000);//optional for php 4.2.0 and up.
-			$char_id = strtoupper(md5(uniqid(rand(0,getrandmax()), true)));
-			$hyphen = chr(45);
-			return substr($char_id, 0, 8) . $hyphen
-				. substr($char_id, 8, 4) . $hyphen
-				. substr($char_id, 12, 4) . $hyphen
-				. substr($char_id, 16, 4) . $hyphen
-				. substr($char_id, 20, 12);
-		}
-	}
+    /**
+     * 返回guid
+     * @return string
+     */
+    function guid()
+    {
+        if (function_exists('com_create_guid')) {
+            return com_create_guid();
+        } else {
+            mt_srand((double)microtime() * 10000);//optional for php 4.2.0 and up.
+            $char_id = strtoupper(md5(uniqid(rand(0, getrandmax()), true)));
+            $hyphen  = chr(45);
+            return substr($char_id, 0, 8) . $hyphen
+                . substr($char_id, 8, 4) . $hyphen
+                . substr($char_id, 12, 4) . $hyphen
+                . substr($char_id, 16, 4) . $hyphen
+                . substr($char_id, 20, 12);
+        }
+    }
 }
 
 if (!function_exists('transformTime')) {
@@ -676,15 +675,15 @@ if (!function_exists('transformTime')) {
         }
         $f = [
             '31536000' => '年',
-            '2592000' => '月',
-            '604800' => '星期',
-            '86400' => '天',
-            '3600' => '小时',
-            '60' => '分钟',
-            '1' => '秒',
+            '2592000'  => '月',
+            '604800'   => '星期',
+            '86400'    => '天',
+            '3600'     => '小时',
+            '60'       => '分钟',
+            '1'        => '秒',
         ];
         foreach ($f as $k => $v) {
-            if (0 != $c = floor($t / (int) $k)) {
+            if (0 != $c = floor($t / (int)$k)) {
                 return $c . $v . '前';
             }
         }
@@ -705,17 +704,17 @@ if (!function_exists('timeFormat')) {
     {
         if (!$timestamp || !is_numeric($timestamp)) {
             return [
-                'type' => 'unix_timestamp',
-                'value' => 0,
-                'alias' => '-',
+                'type'       => 'unix_timestamp',
+                'value'      => 0,
+                'alias'      => '-',
                 'amaze_time' => '',
             ];
         }
 
         return [
-            'type' => 'unix_timestamp',
-            'value' => $timestamp,
-            'alias' => date($format, $timestamp),
+            'type'       => 'unix_timestamp',
+            'value'      => $timestamp,
+            'alias'      => date($format, $timestamp),
             'amaze_time' => transformTime($timestamp),
         ];
     }
@@ -771,11 +770,11 @@ if (!function_exists('array_to_object')) {
         }
         foreach ($e as $k => $v) {
             if (gettype($v) == 'array' || getType($v) == 'object') {
-                $e [$k] = (object) array_to_object($v);
+                $e [$k] = (object)array_to_object($v);
             }
         }
 
-        return (object) $e;
+        return (object)$e;
     }
 }
 
@@ -945,8 +944,7 @@ if (!function_exists('array_sort_tag')) {
                         $i++;
                     }
                 }
-            }
-            else {
+            } else {
                 $temp = array_sort($temp, $key2, $type2);
                 $temp = array_values($temp);
                 foreach ($temp as $key => $val) {
@@ -980,8 +978,7 @@ if (!function_exists('array_sort')) {
         }
         if ($type == 'asc') {
             asort($keys_value);//对键值排序 $k不动
-        }
-        else {
+        } else {
             arsort($keys_value);
         }
         reset($keys_value);
@@ -1038,12 +1035,11 @@ if (!function_exists('my_rmdir')) {
             if ($item == '.' || $item == '..') {
                 continue;
             }
-            $path = (string) $op->path . '/' . $item;
+            $path = (string)$op->path . '/' . $item;
             if (is_dir($path)) {
                 my_rmdir($path);
                 rmdir($path);
-            }
-            else {
+            } else {
                 unlink($path);
             }
         }
@@ -1156,8 +1152,7 @@ if (!function_exists('get_full_week_time')) {
                     break;
                 }
                 $end = strtotime("-1 week", $end);
-            }
-            else {
+            } else {
                 $end = strtotime("-1 day", $end);
                 if (date('Y-m-d', $end) <= date('Y-m-d', $start_time)) {
                     break;
@@ -1198,8 +1193,7 @@ if (!function_exists('get_full_month_time')) {
                 }
                 $begin = strtotime('-1 month', strtotime(date('Y-m-01 00:00:00', $end)));
                 $end   = strtotime(date('Y-m-t', $begin)) + 86399;
-            }
-            else {
+            } else {
                 $end = strtotime("-1 day", $end);
                 if (date('Y-m-d', $end) <= date('Y-m-d', $start_time)) {
                     break;
@@ -1224,8 +1218,7 @@ if (!function_exists('generate_tree')) {
         foreach ($items as $item) {
             if (isset($items[$item['pid']])) {
                 $items[$item['pid']]['son'][] = &$items[$item['id']];
-            }
-            else {
+            } else {
                 $tree[] = &$items[$item['id']];
             }
         }
@@ -1249,8 +1242,8 @@ if (!function_exists('add_tree')) {
             $num = 0;
         }
         $items[$num] = [
-            'id' => $num,
-            'pid' => $pid,
+            'id'   => $num,
+            'pid'  => $pid,
             'name' => $name,
         ];
     }
@@ -1259,94 +1252,93 @@ if (!function_exists('add_tree')) {
 
 if (!function_exists('is_cli')) {
 
-	function is_cli()
-	{
-		return PHP_SAPI === 'cli';
-	}
+    function is_cli()
+    {
+        return PHP_SAPI === 'cli';
+    }
 
 }
 
 if (!function_exists('validation_filter_id_card')) {
-	/**
-	 * 检测身份证是否合法
-	 * @param $id_card
-	 * @return bool
-	 */
-	function validation_filter_id_card($id_card)
-	{
-		if (strlen($id_card) == 18) {
-			return id_card_checksum18($id_card);
-		} elseif ((strlen($id_card) == 15)) {
-			return id_card_checksum18(id_card_15to18($id_card));
-		} else {
-			return false;
-		}
-	}
+    /**
+     * 检测身份证是否合法
+     * @param $id_card
+     * @return bool
+     */
+    function validation_filter_id_card($id_card)
+    {
+        if (strlen($id_card) == 18) {
+            return id_card_checksum18($id_card);
+        } elseif ((strlen($id_card) == 15)) {
+            return id_card_checksum18(id_card_15to18($id_card));
+        } else {
+            return false;
+        }
+    }
 }
 if (!function_exists('id_card_verify_number')) {
-	/**
-	 * 计算身份证校验码，根据国家标准GB 11643-1999
-	 * @param $id_card_base
-	 * @return false|string
-	 */
-	function id_card_verify_number($id_card_base)
-	{
-		if (strlen($id_card_base) != 17) {
-			return false;
-		}
-		//加权因子
-		$factor = array(7, 9, 10, 5, 8, 4, 2, 1, 6, 3, 7, 9, 10, 5, 8, 4, 2);
-		//校验码对应值
-		$verify_number_list = array('1', '0', 'X', '9', '8', '7', '6', '5', '4', '3', '2');
-		$checksum           = 0;
-		for ($i = 0; $i < strlen($id_card_base); $i++) {
-			$checksum += substr($id_card_base, $i, 1) * $factor[$i];
-		}
-		$mod           = $checksum % 11;
-		$verify_number = $verify_number_list[$mod];
-		return $verify_number;
-	}
+    /**
+     * 计算身份证校验码，根据国家标准GB 11643-1999
+     * @param $id_card_base
+     * @return false|string
+     */
+    function id_card_verify_number($id_card_base)
+    {
+        if (strlen($id_card_base) != 17) {
+            return false;
+        }
+        //加权因子
+        $factor = array(7, 9, 10, 5, 8, 4, 2, 1, 6, 3, 7, 9, 10, 5, 8, 4, 2);
+        //校验码对应值
+        $verify_number_list = array('1', '0', 'X', '9', '8', '7', '6', '5', '4', '3', '2');
+        $checksum           = 0;
+        for ($i = 0; $i < strlen($id_card_base); $i++) {
+            $checksum += substr($id_card_base, $i, 1) * $factor[$i];
+        }
+        $mod           = $checksum % 11;
+        return $verify_number_list[$mod];
+    }
 }
 if (!function_exists('id_card_15to18')) {
-	/**
-	 * 将15位身份证升级到18位
-	 * @param $id_card
-	 * @return false|string
-	 */
-	function id_card_15to18($id_card)
-	{
-		if (strlen($id_card) != 15) {
-			return false;
-		} else {
-			// 如果身份证顺序码是996 997 998 999，这些是为百岁以上老人的特殊编码
-			if (array_search(substr($id_card, 12, 3), array('996', '997', '998', '999')) !== false) {
-				$id_card = substr($id_card, 0, 6) . '18' . substr($id_card, 6, 9);
-			} else {
-				$id_card = substr($id_card, 0, 6) . '19' . substr($id_card, 6, 9);
-			}
-		}
-		$id_card = $id_card . id_card_verify_number($id_card);
-		return $id_card;
-	}
+    /**
+     * 将15位身份证升级到18位
+     * @param $id_card
+     * @return false|string
+     */
+    function id_card_15to18($id_card)
+    {
+        if (strlen($id_card) != 15) {
+            return false;
+        } else {
+            // 如果身份证顺序码是996 997 998 999，这些是为百岁以上老人的特殊编码
+            if (array_search(substr($id_card, 12, 3), array('996', '997', '998', '999')) !== false) {
+                $id_card = substr($id_card, 0, 6) . '18' . substr($id_card, 6, 9);
+            } else {
+                $id_card = substr($id_card, 0, 6) . '19' . substr($id_card, 6, 9);
+            }
+        }
+        $id_card = $id_card . id_card_verify_number($id_card);
+        return $id_card;
+    }
 }
 if (!function_exists('id_card_checksum18')) {
-	/**
-	 * 18位身份证校验码有效性检查
-	 * @param $id_card
-	 * @return bool
-	 */
-	function id_card_checksum18($id_card)
-	{
-		if (strlen($id_card) != 18) {
-			return false;
-		}
-		$idcard_base = substr($id_card, 0, 17);
-		if (id_card_verify_number($idcard_base) != strtoupper(substr($id_card, 17, 1))) {
-			return false;
-		} else {
-			return true;
-		}
-	}
+    /**
+     * 18位身份证校验码有效性检查
+     * @param $id_card
+     * @return bool
+     */
+    function id_card_checksum18($id_card)
+    {
+        if (strlen($id_card) != 18) {
+            return false;
+        }
+        $idcard_base = substr($id_card, 0, 17);
+        if (id_card_verify_number($idcard_base) != strtoupper(substr($id_card, 17, 1))) {
+            return false;
+        } else {
+            return true;
+        }
+    }
 }
 
 
@@ -1360,5 +1352,19 @@ if (!function_exists('deleteBOM')) {
     function deleteBOM($value)
     {
         return trim($value, chr(239) . chr(187) . chr(191));
+    }
+}
+
+if (!function_exists('stringParser')) {
+    /**
+     * 字符串分析器
+     * @param $string
+     * @param $replacer
+     * @return string|string[]
+     * @author carlo<284474102@qq.com>
+     */
+    function stringParser($string, $replacer)
+    {
+        return str_replace(array_keys($replacer), array_values($replacer), $string);
     }
 }
