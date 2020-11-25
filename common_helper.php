@@ -325,6 +325,7 @@ if (!function_exists('get_date_str')) {
         return date("Y-m-d", strtotime('-' . $time . ' days', strtotime($time_str)));
     }
 }
+
 if (!function_exists('get_distance')) {
     /**
      * 计算两点地理坐标之间的距离
@@ -361,6 +362,7 @@ if (!function_exists('get_distance')) {
         return round($distance, $decimal);
     }
 }
+
 if (!function_exists('is_date')) {
     /**
      * 判断是否为日期格式
@@ -562,6 +564,7 @@ if (!function_exists('sign')) {
         return md5(http_build_query($params));
     }
 }
+
 if (!function_exists('desensitize')) {
     /**
      * 对字符串脱敏
@@ -586,6 +589,7 @@ if (!function_exists('desensitize')) {
         return implode('', $str_arr);
     }
 }
+
 if (!function_exists('is_serialized')) {
     /**
      * 判断是否虚拟化数据
@@ -621,6 +625,7 @@ if (!function_exists('is_serialized')) {
         return false;
     }
 }
+
 if (!function_exists('get_uuid')) {
     /**
      * 获取唯一id
@@ -1249,7 +1254,6 @@ if (!function_exists('add_tree')) {
     }
 }
 
-
 if (!function_exists('is_cli')) {
 
     function is_cli()
@@ -1276,6 +1280,7 @@ if (!function_exists('validation_filter_id_card')) {
         }
     }
 }
+
 if (!function_exists('id_card_verify_number')) {
     /**
      * 计算身份证校验码，根据国家标准GB 11643-1999
@@ -1295,10 +1300,11 @@ if (!function_exists('id_card_verify_number')) {
         for ($i = 0; $i < strlen($id_card_base); $i++) {
             $checksum += substr($id_card_base, $i, 1) * $factor[$i];
         }
-        $mod           = $checksum % 11;
+        $mod = $checksum % 11;
         return $verify_number_list[$mod];
     }
 }
+
 if (!function_exists('id_card_15to18')) {
     /**
      * 将15位身份证升级到18位
@@ -1321,6 +1327,7 @@ if (!function_exists('id_card_15to18')) {
         return $id_card;
     }
 }
+
 if (!function_exists('id_card_checksum18')) {
     /**
      * 18位身份证校验码有效性检查
@@ -1340,7 +1347,6 @@ if (!function_exists('id_card_checksum18')) {
         }
     }
 }
-
 
 if (!function_exists('deleteBOM')) {
     /**
@@ -1366,5 +1372,29 @@ if (!function_exists('stringParser')) {
     function stringParser($string, $replacer)
     {
         return str_replace(array_keys($replacer), array_values($replacer), $string);
+    }
+}
+
+
+if (!function_exists('paging')) {
+    /**
+     * 数组分页
+     * @param int $page
+     * @param int $perPage
+     * @param array $array
+     * @param string $order
+     * @return array
+     * @author carlo<284474102@qq.com>
+     */
+    function paging($page, $perPage, array $array, $order = 'asc')
+    {
+        $page    = (empty($page)) ? 1 : $page;
+        $perPage = (empty($perPage)) ? 10 : $perPage;
+        $start   = ($page - 1) * $perPage;
+
+        if ($order == 'desc') {
+            $array = array_reverse($array);
+        }
+        return array_slice($array, $start, $perPage);
     }
 }
