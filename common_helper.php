@@ -1375,6 +1375,32 @@ if (!function_exists('stringParser')) {
     }
 }
 
+if (!function_exists('get_dir')) {
+    /**
+     * 获取文件夹内容
+     * @param $path
+     * @return array
+     */
+    function get_dir($path)
+    {
+        $arr = [];
+        if (is_dir($path)) {
+            $data = scandir($path);
+            foreach ($data as $value) {
+                if ($value != '.' && $value != '..') {
+                    $sub_path = $path . "/" . $value;
+                    if (is_dir($sub_path)) {
+                        $temp = get_dir($sub_path);
+                        $arr  = array_merge($temp, $arr);
+                    } else {
+                        $arr[] = $sub_path;
+                    }
+                }
+            }
+        }
+        return $arr;
+    }
+}
 
 if (!function_exists('paging')) {
     /**
