@@ -1,21 +1,31 @@
 <?php
 
-if (!function_exists('is_json')) {
-    /**
-     * 判断数据是合法的json数据: (PHP版本大于5.3)
-     *
-     * @param $string
-     * @return bool
-     *
-     */
-    function is_json($string)
-    {
-        json_decode($string);
-
-        return (json_last_error() == JSON_ERROR_NONE);
-    }
+if (!function_exists('getIntranetIP')) {
+	/**
+	 * 获取本地机子内网ip
+	 * @return array
+	 */
+	function getIntranetIP()
+	{
+		return gethostbynamel(exec("hostname"));
+	}
 }
 
+if (!function_exists('is_json')) {
+	/**
+	 * 判断数据是合法的json数据: (PHP版本大于5.3)
+	 *
+	 * @param $string
+	 * @return bool
+	 *
+	 */
+	function is_json($string)
+	{
+		json_decode($string);
+
+		return (json_last_error() == JSON_ERROR_NONE);
+	}
+}
 if (!function_exists('is_not_json')) {
     /**
      * 判断数据不是JSON格式
@@ -749,7 +759,7 @@ if (!function_exists('replace_special_char')) {
      * replace_special_char
      *
      * @param $strParam
-     * @return null|string|string[] | 过滤非法字符
+     * @return null|string|string[]
      *
      */
     function replace_special_char($strParam)
@@ -880,7 +890,7 @@ if (!function_exists('get_ids')) {
      * @param $array
      * @param $value
      * @param $key
-     * @return array|获取符合mysql IN的 id数组
+     * @return array
      *
      */
     function get_ids($array, $value, $key = null)
